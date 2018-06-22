@@ -52,8 +52,8 @@
     }
   }
 
-  /*Styl tła przycisku*/
-  .Bgbtn {
+  /*Styl tła - przezroczyste szare*/
+  .Bggrey {
     background-color: rgba(31, 29, 29, 0.178);
   }
 
@@ -69,3 +69,12 @@
     height: 100%;
     object-fit: cover;
   }
+
+/*Style navbar*/
+.navbar-shrink {
+    background-color: rgba(31, 29, 29, 0.9);
+  }
+
+#navbarMain .nav-link, #navbarMain .navbar-toggler {
+  color: #fff;
+}
