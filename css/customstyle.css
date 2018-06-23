@@ -1,3 +1,10 @@
+  body {
+    background-image: url("../images/bgimage.jpg");
+  /*  background-position: center top;
+    background-size: 100% auto;*/
+    color: white;
+  }
+
   /*Style tekstu na karuzeli*/
   .Toptext {
     position: absolute;
@@ -72,9 +79,26 @@
 
 /*Style navbar*/
 .navbar-shrink {
-    background-color: rgba(31, 29, 29, 0.9);
+    background-color: rgba(0, 0, 0, 0.8);
   }
 
 #navbarMain .nav-link, #navbarMain .navbar-toggler {
   color: #fff;
+}
+
+/*Style kart z nożami*/
+.card {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+/*Style tekstów*/
+.Sekcja {
+  font-family: 'Markazi Text', serif;
+  font-size: 70px;
+  padding-top: 100px;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0;
 }
