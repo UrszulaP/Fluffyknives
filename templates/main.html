@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Markazi+Text" rel="stylesheet">
 
   <!-- Moje style -->
-  <link href="../css/customstyle.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/customstyle.css') }}" rel="stylesheet" type="text/css">
 
   <title>FluffyKnives</title>
 </head>
@@ -26,7 +26,7 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top Bggrey" id="navbarMain">
   <div class="container">
     <a class="navbar-brand" href="#page-top">
-      <img src="../images/tigerfootprint.png" width="70" height="70" alt="logo">
+      <img src="{{ url_for('static', filename='images/tigerfootprint.png') }}" width="70" height="70" alt="logo">
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-laber="Toggle navigation">
@@ -80,15 +80,15 @@
   <!-- Zawartość karuzeli -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../images/IMG_20180424_174003.jpg">
+      <img src="{{ url_for('static', filename='images/IMG_20180424_174003.jpg') }}">
     </div>
 
     <div class="carousel-item">
-      <img src="../images/IMG_20180424_172004.jpg">
+      <img src="{{ url_for('static', filename='images/IMG_20180424_172004.jpg') }}">
     </div>
 
     <div class="carousel-item">
-      <img src="../images/IMG_20180424_180851.jpg">
+      <img src="{{ url_for('static', filename='images/IMG_20180424_180851.jpg') }}">
     </div>
   </div>
 
@@ -118,7 +118,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -134,7 +134,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -150,7 +150,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -166,7 +166,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -182,7 +182,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -198,7 +198,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -214,7 +214,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -230,7 +230,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -246,7 +246,7 @@
 
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="../images/shop/IMG_20180424_180914.jpg" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">Shadow blade</h5>
             <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
@@ -274,7 +274,7 @@
       <div class="col-lg-8 offset-lg-2 col-xs-12">
         <div class="text-center embed-responsive embed-responsive-4by3 mt-4">
           <video width="320" height="240" controls>
-          <source src="../video/VID_20180424_173004.mp4" type="video/mp4">
+          <source src="{{ url_for('static', filename='video/VID_20180424_173004.mp4') }}" type="video/mp4">
           Your browser does not support the video tag.
           </video>
         </div>
@@ -317,6 +317,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
     <!-- JS ze strony startbootstrap.com -->
-    <script src="../js/navbar.js"></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
 </body>
 </html>
