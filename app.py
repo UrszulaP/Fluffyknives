@@ -106,13 +106,13 @@ def register():
 			return redirect(url_for('hello'))
 		return render_template('register.html')
 
-	if request.method == 'POST':	### zrobić, żeby username w bazie było unikalne, dodać walidację formularza
+	if request.method == 'POST':
 		username = request.form['userID']
 		password = request.form['userPass']
 		if username == "":
-			return "Nie wprowadzono loginu"		
+			return render_template('register_failed.html', message="Nie wprowadzono loginu")
 		if password == "":
-			return "Nie wprowadzono hasła"
+			return render_template('register_failed.html', message="Nie wprowadzono hasła")
 		
 		# pobiera max id z bazy, ustawia nowe id na kolejne
 		db = get_db()
@@ -127,7 +127,7 @@ def register():
 			data = db.execute('INSERT INTO users (UserID, UserLogin, UserPassword) VALUES (?,?,?)', (next_user_id, username, password)).fetchall()
 			db.commit()
 		except:
-			return "Nazwa użytkownika jest już zajęta"
+			return render_template('register_failed.html', message="Nazwa użytkownika jest już zajęta")
 		return "Zarejestrowano"
 
 
