@@ -59,7 +59,6 @@ def check_auth(username, password):
 
 @app.route('/')
 def root():
-	
 	db = get_db()
 	data = db.execute('SELECT * FROM items').fetchall()
 
@@ -71,11 +70,12 @@ def root():
 	return render_template('main.html', itemsList = itemsList)
 
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'GET':
 		if 'username' in session:
-			return redirect(url_for('hello'))
+			return redirect(url_for('root'))
 		return render_template('login.html')
 
 	if request.method == 'POST':
@@ -86,17 +86,9 @@ def login():
 			#print("przed", session)
 			session['username'] = username
 			#print("po", session)
-			return redirect(url_for('hello'))
+			return redirect(url_for('root'))
 		else:
 			return render_template('login_failed.html')
-
-
-@app.route('/hello')
-@requires_user_session
-def hello():
-	name = session['username']
-	#print("hello", session)
-	return render_template('hello.html', name = name)
 
 
 
@@ -113,7 +105,7 @@ def logout():
 def register():
 	if request.method == 'GET':
 		if 'username' in session:
-			return redirect(url_for('hello'))
+			return redirect(url_for('root'))
 		return render_template('register.html')
 
 	if request.method == 'POST':
@@ -139,7 +131,6 @@ def register():
 		except:
 			return render_template('register_failed.html', message="Nazwa użytkownika jest już zajęta")
 		return "Zarejestrowano"
-
 
 
 
