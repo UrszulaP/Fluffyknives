@@ -114,153 +114,23 @@
     <p class="text-center">Zamównienia można składać telefonicznie (numer w sekcji "Kontakt") lub on-line. W tym celu należy założyć konto na naszej stronie.</p>
 
     <!-- Kafelki z nożami na sprzedaż -->
+    <!-- Tytuły, opisy i nazwy zdjęć pobierane są z bazy danych i generowane pętlą for -->
     <div class="row">
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      {% for i in itemsList %}
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/') }}{{i[4]}}" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
+            <h5 class="card-title text-center">{{i[1]}}</h5>
+            <p class="card-text text-center">{{i[2]}}</p>
+            {{i[3] | safe}}
             <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
           </div>
         </div>
       </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/shop/IMG_20180424_180914.jpg') }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">Shadow blade</h5>
-            <p class="card-text text-center">Nóż o zadziornym charakterze i wyjątkowym, złożonym kształcie ostrza</p>
-            <ul>
-              <li>ostrze ze stali szybkotnącej</li>
-              <li>rączka w kolorze czarnym</li>
-              <li>pokrowiec na zamówienie</li>
-            </ul>
-            <div class="text-center"><a href="#" class="btn btn-outline-dark">Więcej informacji</a></div>
-          </div>
-        </div>
-      </div>
-
+      {% endfor %} 
     </div>
+ 
   </div>
 
 <!-- ------------------------------ABOUT US------------------------------ -->

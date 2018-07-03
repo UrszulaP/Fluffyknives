@@ -9,13 +9,14 @@ from flask import (
 	g,)
 from functools import wraps
 import sqlite3
+import json
 
 app = Flask(__name__)
 app.secret_key = "any random string"
 
 # -----------------------------POŁĄCZENIE Z BAZĄ DANYCH------------------------------#
 
-DATABASE = 'account_db.db'
+DATABASE = 'db/database.db'
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -58,7 +59,16 @@ def check_auth(username, password):
 
 @app.route('/')
 def root():
-	return render_template('main.html')
+	
+	db = get_db()
+	data = db.execute('SELECT * FROM items').fetchall()
+
+	itemsList = []
+	for i in data:
+		itemsList.append(i)
+		itemsList_json = json.dumps(itemsList)
+
+	return render_template('main.html', itemsList = itemsList)
 
 
 @app.route('/login', methods=['GET', 'POST'])
