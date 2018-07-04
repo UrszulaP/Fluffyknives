@@ -130,7 +130,7 @@ def register():
 			db.commit()
 		except:
 			return render_template('register_failed.html', message="Nazwa użytkownika jest już zajęta")
-		return "Zarejestrowano"
+		return render_template('register_ok.html')
 
 
 
