@@ -12,7 +12,7 @@ import sqlite3
 import json
 
 app = Flask(__name__)
-app.secret_key = "any random string"
+app.secret_key = "546fd15ec3802ecc4ec4789d324cc647"
 
 # -----------------------------POŁĄCZENIE Z BAZĄ DANYCH------------------------------#
 
