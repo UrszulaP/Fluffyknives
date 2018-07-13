@@ -47,11 +47,11 @@
         </li>
       </ul>
       <!-- Zmienna treść - dla użytkownika zalogowanego i dla niezalogowanego -->
-      {% if 'username' in session %}
+      {% if current_user.is_authenticated %}
       <ul class="navbar-nav ml-auto">
-        <span class="navbar-text mr-3">Witaj {{ session['username'] }}! :)</span>
+        <span class="navbar-text mr-3">Witaj {{ current_user.username }}! :)</span>
         <li class="nav-item">
-          <a class="nav-link" href="/#">Moje konto</a>
+          <a class="nav-link" href="{{ url_for('account') }}">Moje konto</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/#">Koszyk</a>

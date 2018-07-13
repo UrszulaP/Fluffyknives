@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+
+{% block navbarposition %}
+<nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
+{% endblock %}
+
+
+{% block content %}
+	<h1>{{ current_user.username }}</h1>
+{% endblock content %}
+
+
+{% block footerposition %}
+<footer class="page-footer font-small pt-2 blue mt-4 fixed-bottom">
+{% endblock %}
