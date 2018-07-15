@@ -1,24 +1,17 @@
 from flask import redirect,	url_for, render_template,	request
 from app_files import app, db, bcrypt
 from app_files.forms import RegistrationForm, LoginForm
-from app_files.db_models import User
+from app_files.db_models import User, Item
 from flask_login import login_user, current_user, logout_user, login_required
-
 
 # ------------------------------------WIDOKI-----------------------------------------#
 
 @app.route('/')
 def root():
-	# db = get_db()
-	# data = db.execute('SELECT * FROM items').fetchall()
-
-	# itemsList = []
-	# for i in data:
-	# 	itemsList.append(i)
-	# 	itemsList_json = json.dumps(itemsList)
-
-	# return render_template('main.html', itemsList = itemsList)
-	return render_template('main.html')
+	itemsList = Item.query.all()
+	for i in itemsList:
+		print(i.itemImage)
+	return render_template('main.html', itemsList=itemsList)
 
 
 
