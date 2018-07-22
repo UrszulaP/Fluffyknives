@@ -15,7 +15,6 @@
 		  	{{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
 			  <div class="form-group">
 			  	{{ form.email.label(class="form-control-label") }}
-			    <!-- <label for="loginInput">Login</label> -->
 			    {% if form.email.errors %}
             {{ form.email(class="form-control is-invalid") }}
             <div class="invalid-feedback">
@@ -26,12 +25,10 @@
           {% else %}
             {{ form.email(class="form-control") }}
           {% endif %}
-					<!-- <input type="text" class="form-control" id="loginInput" placeholder="Login" name='userID'> -->
 				</div>
 
 				<div class="form-group">
 					{{ form.password.label(class="form-control-label") }}
-				  <!-- <label for="passwordInput">Hasło</label> -->
 				  {% if form.password.errors %}
             {{ form.password(class="form-control is-invalid") }}
             <div class="invalid-feedback">
@@ -42,7 +39,6 @@
           {% else %}
             {{ form.password(class="form-control") }}
           {% endif %}
-				  <!-- <input type="password" class="form-control" id="passwordInput" placeholder="Hasło" name='userPass'> -->
 				</div>
 
 				<div class="form-check">
@@ -53,8 +49,6 @@
 				<div class="form-group">
           {{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
         </div>
-				<!-- <button type="submit" class="btn btn-outline-light btn-block mt-4">Zaloguj</button> -->
-
 
         <a href="#" class="text-muted">Zapomniałeś hasła?</a>
 

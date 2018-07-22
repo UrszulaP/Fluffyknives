@@ -1,16 +1,20 @@
 from flask import redirect,	url_for, render_template,	request
 from app_files import app, db, bcrypt
-from app_files.forms import RegistrationForm, LoginForm
+from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from app_files.db_models import User, Item
 from flask_login import login_user, current_user, logout_user, login_required
+# secrets do hashowania nazw zdjęć - aby się nie powtarzały
+import secrets
+# do wyciągnięcia rozszerzenia pliku
+import os
+# zainstalowano Pillow - do zmiany rozmiaru obrazów
+from PIL import Image
 
 # ------------------------------------WIDOKI-----------------------------------------#
 
 @app.route('/')
 def root():
 	itemsList = Item.query.all()
-	for i in itemsList:
-		print(i.itemImage)
 	return render_template('main.html', itemsList=itemsList)
 
 
@@ -62,7 +66,52 @@ def register():
   return render_template('register.html', form=form)
 
 
-@app.route('/account')
+
+# funkcja do uploadu zdjęcia
+def save_picture(form_picture):
+	# generowanie losowego hasha (8 znaków)
+	random_hex = secrets.token_hex(8)
+	# oddzielenie nazwy i rozszerzenia pliku
+	f_name, file_extension = os.path.splitext(form_picture.filename) # _ - oznaczenie nieużywanej zmiennej
+	picture_filename = random_hex + file_extension
+	# określenie ścieżki zapisu plików
+	picture_path = os.path.join(app.root_path, 'static/images/profile_pictures', picture_filename)
+	# zmiana rozmiaru obrazu przy zapisywaniu
+	output_size = (125, 125)
+	resized_picture = Image.open(form_picture)
+	resized_picture.thumbnail(output_size)
+	# zapisywanie obrazu do folderu
+	resized_picture.save(picture_path)
+	# zwraca nazwę pliku, aby zapisać ją w bazie danych
+	return picture_filename
+
+@app.route('/account', methods=['GET', 'POST'])
+# dekorator z flask_login
 @login_required
 def account():
-	return render_template('account.html')
+	form = UpdateAccountForm()
+	# zmiana danych użytkownika
+	if form.validate_on_submit():
+		# if, bo dodanie pliku obrazu nie jest wymagane
+		if form.picture.data:
+			picture_file = save_picture(form.picture.data)
+			# usuwanie starego zdjęcia
+			if current_user.image_file != 'defaultpp.jpg':
+				old_picture_path = os.path.join(app.root_path, 'static/images/profile_pictures', current_user.image_file)
+				os.remove(old_picture_path)
+			current_user.image_file = picture_file
+			
+		current_user.username = form.username.data
+		current_user.email = form.email.data
+		db.session.commit()
+		# przy ładowaniu ponownie tej samej strony należy użyć redirect -
+		# przy render_template POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza)
+		return render_template('updated.html')
+	# wypełnia pola formularza aktualnymi danymi
+	elif request.method == 'GET':
+		form.username.data = current_user.username
+		form.email.data = current_user.email
+	# określa ścieżkę do zdjęcia profilowego
+	image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_file)
+	return render_template('account.html', form=form, image_file=image_file)
+

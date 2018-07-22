@@ -7,8 +7,77 @@
 
 
 {% block content %}
-	<h1>{{ current_user.username }}</h1>
+
+<div class="container">
+
+  <div class="row justify-content-md-center">
+    <div class="media">
+      <img src="{{image_file}}" class="rounded-circle img-fluid Img125">
+      <div class="media-body">
+        <h3 class="ml-5">{{ current_user.username }}</h3>
+        <p class="text-secondary ml-5">{{ current_user.email }}</p>
+      </div>
+    </div>
+  </div>
+
+	<p class="text-center mt-5">Zaktualizuj swoje dane</p>
+
+	<div class="row justify-content-md-center">
+		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-8 col-xs-12 mt-3">
+      <!-- enctype - trzeba określić, aby możliwy był upload plików -->
+		  <form action = "/account" method = "POST" enctype="multipart/form-data">
+		  	{{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
+			  <div class="form-group">
+			  	{{ form.username.label(class="form-control-label") }}
+			    {% if form.username.errors %}
+            {{ form.username(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.username(class="form-control") }}
+          {% endif %}
+				</div>
+
+				<div class="form-group">
+					{{ form.email.label(class="form-control-label") }}
+				  {% if form.email.errors %}
+            {{ form.email(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.email(class="form-control") }}
+          {% endif %}
+				</div>
+
+        <div class="form-group">
+          {{ form.picture.label() }}
+          {{ form.picture() }}
+          <!-- inny sposób wyrzucania błędów do file field -->
+          {% if form.picture.errors %}
+            {% for error in form.picture.errors %}
+              <small class="text-danger text-xs">{{ error }}</span>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+				<div class="form-group">
+          {{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
+        </div>
+
+		  </form>
+		</div>
+	</div>
+</div>
+
+
 {% endblock content %}
+
 
 
 {% block footerposition %}

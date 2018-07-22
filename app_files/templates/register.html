@@ -15,7 +15,6 @@
 		  	{{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
 			  <div class="form-group">
 			  	{{ form.username.label(class="form-control-label") }}
-			    <!-- <label for="loginInput">Utwórz login użytkownika</label> -->
 			    {% if form.username.errors %}
             {{ form.username(class="form-control is-invalid") }}
             <div class="invalid-feedback">
@@ -26,7 +25,6 @@
           {% else %}
             {{ form.username(class="form-control") }}
           {% endif %}
-					<!-- <input type="text" class="form-control" id="loginInput" placeholder="Login" name='userID'> -->
 				</div>
 
 				<div class="form-group">
@@ -45,7 +43,6 @@
 
 				<div class="form-group">
 					{{ form.password.label(class="form-control-label") }}
-				  <!-- <label for="passwordInput">Utwórz hasło użytkownika</label> -->
 				  {% if form.password.errors %}
             {{ form.password(class="form-control is-invalid") }}
             <div class="invalid-feedback">
@@ -56,7 +53,6 @@
           {% else %}
             {{ form.password(class="form-control") }}
           {% endif %}
-				  <!-- <input type="password" class="form-control" id="passwordInput" placeholder="Hasło" name='userPass'> -->
 				</div>
 
 				<div class="form-group">
@@ -76,7 +72,7 @@
 				<div class="form-group">
           {{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
         </div>
-				<!-- <button type="submit" class="btn btn-outline-light btn-block mt-4">Zarejestruj</button> -->
+
 		  </form>
 		</div>
 	</div>

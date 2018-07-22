@@ -102,3 +102,9 @@ footer {
     background-color: rgba(0, 0, 0, 0.5);
     margin: 0;
 }
+
+/*Style dodawanych obrazów*/
+.Img125 {
+  max-height: 125px; 
+  max-width: 125px;
+}

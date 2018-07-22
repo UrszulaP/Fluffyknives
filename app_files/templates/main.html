@@ -67,7 +67,9 @@
       {% for i in itemsList %}
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="card border-dark text-dark mb-3 mt-3">
-          <img class="card-img-top img-fluid" src="{{url_for('static', filename='images/shop/') }}{{i.itemImage}}" alt="Card image cap">
+          <img class="card-img-top img-fluid" 
+          src="{{url_for('static', filename='images/shop/'+ i.itemImage)}}" 
+          alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">{{ i.itemName }}</h5>
             <p class="card-text text-center">{{ i.itemMainDescription }}</p>
