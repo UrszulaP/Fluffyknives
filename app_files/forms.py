@@ -51,6 +51,8 @@ class UpdateAccountForm(FlaskForm):
                         Email("Nieprawidłowy adres e-mail")])
     picture = FileField('Zaktualizuj zdjęcie profilowe', 
                         validators=[FileAllowed(['jpg', 'png'], "Dozwolony format pliku to .jpg lub .png")])
+    adress = StringField('Adres do wysyłki', validators=[Length(min=2, max=200, message="Adres powinien zawierać od %(min)d do %(max)d znaków")])
+    phone = StringField('Numer telefonu', validators=[Length(min=9, max=20, message="Numer powinien zawierać od %(min)d do %(max)d znaków")])
     submit = SubmitField('Zaktualizuj')
 
     # custom validation - sprawdza, czy wprowadzono unikalną wartość - tylko gdy wprowadzono inną niż aktualna

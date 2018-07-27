@@ -103,6 +103,8 @@ def account():
 			
 		current_user.username = form.username.data
 		current_user.email = form.email.data
+		current_user.adress = form.adress.data
+		current_user.phone = form.phone.data
 		db.session.commit()
 		# przy ładowaniu ponownie tej samej strony należy użyć redirect -
 		# przy render_template POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza)
@@ -111,6 +113,8 @@ def account():
 	elif request.method == 'GET':
 		form.username.data = current_user.username
 		form.email.data = current_user.email
+		form.adress.data = current_user.adress
+		form.phone.data = current_user.phone
 	# określa ścieżkę do zdjęcia profilowego
 	image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_file)
 	return render_template('account.html', form=form, image_file=image_file)
