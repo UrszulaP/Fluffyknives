@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block navbarposition %}
+<nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
+{% endblock %}
+
+{% block content %}
+
+<!-- ------------------------------TEKST------------------------------ -->
+
+<div class="container">
+	<h4 class="text-center mt-3 mb-5">Twoje zamówienia</h4>
+
+	<div class="table-responsive">
+    <table class="table">
+    	<thead>
+    		<tr>
+    			<th scope="col">ID zamówienia</th>
+    			<th scope="col"></th>
+    			<th scope="col">ID przedmiotu</th>
+    			<th scope="col">Nazwa</th>
+    			<th scope="col">Cena</th>
+    			<th scope="col">Status zamówienia</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for i in ordersList %}
+    		<tr>
+	    		<td class="align-middle">{{ i[0].id }}</td>
+	    		<td><img class="img-fluid Img125 img-responsive" 
+          src="{{url_for('static', filename='images/shop/'+ i[1].itemImage)}}" 
+          alt="Item image"></td>
+	    		<td class="align-middle">{{ i[0].itemID }}</td>
+	    		<td class="align-middle">{{ i[1].itemName }}</td>
+	    		<td class="align-middle">{{ i[1].itemPrice }}</td>
+	    		<td class="align-middle">{{ i[0].status }}</td>
+    		</tr>
+    		{% endfor %}
+    	</tbody>
+    </table>
+	</div>
+
+
+{% endblock content %}
+
+{% block footerposition %}
+<footer class="page-footer font-small pt-2 blue mt-4 fixed-bottom">
+{% endblock %}

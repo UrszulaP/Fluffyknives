@@ -74,7 +74,13 @@
             <h5 class="card-title text-center">{{ i.itemName }}</h5>
             <p class="card-text text-center">{{ i.itemMainDescription }}</p>
             {{ i.itemPointsDescription | safe}}
-            <div class="text-center"><a href="#" class="btn btn-outline-dark mr-3">Więcej informacji</a><a href="#" class="btn btn-outline-dark">Zamów</a></div>
+            <!-- <div class="text-center"><a href="#" class="btn btn-outline-dark mr-3">Więcej informacji</a><a href="#" class="btn btn-outline-dark">Zamów</a></div> -->
+            <form action = "/cart" method = "POST">
+              <div class="text-center">
+                <button class="btn btn-outline-dark" name="orderedItemID" value="{{ i.id }}">Zamów</button>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>

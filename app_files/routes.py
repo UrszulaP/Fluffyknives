@@ -1,7 +1,7 @@
 from flask import redirect,	url_for, render_template,	request
 from app_files import app, db, bcrypt
 from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from app_files.db_models import User, Item
+from app_files.db_models import User, Item, Order
 from flask_login import login_user, current_user, logout_user, login_required
 # secrets do hashowania nazw zdjęć - aby się nie powtarzały
 import secrets
@@ -119,3 +119,21 @@ def account():
 	image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_file)
 	return render_template('account.html', form=form, image_file=image_file)
 
+
+
+@app.route('/cart', methods=['GET', 'POST'])
+# dekorator z flask_login
+@login_required
+def cart():
+	if request.method == 'POST':
+		# pobranie itemID z main.html
+		orderedItemID = int(request.form['orderedItemID'])
+		# stworzenie obiektu zamówienia, dodanie go do bazy danych
+		order = Order(itemID=orderedItemID, userID=current_user.id)
+		db.session.add(order)
+		db.session.commit()
+	# zapytanie zamówień zalogowanego użytkownika
+	# query(Order) - dostęp do Order; query(Order, Item), żeby mieć dostęp też do Item, który dołączamy joinem
+	ordersList = db.session.query(Order, Item).filter(Order.userID == current_user.id).join(Item, Order.itemID == Item.id)
+
+	return render_template('cart.html', ordersList=ordersList)
