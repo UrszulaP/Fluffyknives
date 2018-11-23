@@ -1,6 +1,6 @@
 from flask import redirect,	url_for, render_template,	request
 from app_files import app, db, bcrypt
-from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderStatusForm
 from app_files.db_models import User, Item, Order
 from flask_login import login_user, current_user, logout_user, login_required
 # secrets do hashowania nazw zdjęć - aby się nie powtarzały
@@ -145,9 +145,23 @@ def shopmanagement():
 
 
 
-@app.route('/orders')
+@app.route('/orders', methods=['GET', 'POST'])
+@login_required
 def orders():
-	# query(Order) - zapytanie do Order; query(Order, Item, User), żeby mieć dostęp też do Item i User, dołączanych joinem
-	ordersList = db.session.query(Order, Item, User).join(Item, Order.itemID==Item.id).join(User, Order.userID==User.id).all()
-	print(ordersList)
-	return render_template('orders.html', ordersList=ordersList)
+	if current_user.email=="admin@admin.admin":
+		form = OrderStatusForm()
+		# zmiana statusu zamówienia w przypadku POST
+		if form.validate_on_submit():
+			# pobranie numeru zamówienia, którego dotyczy zmiana
+			orderID = form.orderID.data
+			# zapytanie o zamówienie wg jego id
+			order = db.session.query(Order).filter(Order.id==orderID).first()
+			# zmiana statusu zamówienia w bazie danych
+			order.status = form.status.data
+			db.session.commit()
+		# zapytanie wszystkich zamówień
+		# query(Order) - zapytanie do Order; query(Order, Item, User), żeby mieć dostęp też do Item i User, dołączanych joinem
+		ordersList = db.session.query(Order, Item, User).join(Item, Order.itemID==Item.id).join(User, Order.userID==User.id).all()
+		return render_template('orders.html', ordersList=ordersList, form=form)
+	else:
+		return redirect(url_for('root'))

@@ -52,5 +52,5 @@ class Order(db.Model):
 	user = db.relationship('User', backref="item_associations")
 
 	def __repr__(self):
-		return f"Order('{self.itemID}', '{self.userID}')"
+		return f"Order('{self.id}', {self.itemID}', '{self.userID}')"
 	

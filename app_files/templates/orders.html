@@ -9,7 +9,7 @@
 <!-- ------------------------------TEKST------------------------------ -->
 
 <div class="container">
-	<h4 class="text-center mt-3 mb-5">Twoje zamówienia</h4>
+	<h4 class="text-center mt-3 mb-5">Zamówienia</h4>
 
 	<div class="table-responsive">
         <table class="table">
@@ -29,7 +29,7 @@
         	<tbody>
         		{% for i in ordersList %}
                 <!-- i[0] - join Order, i[1] - join Item, i[2] - join User -->
-        		<tr>
+        		<tr class="text-nowrap">
     	    		<td class="align-middle">{{ i[0].id }}</td>
     	    		<td class="align-middle">{{ i[0].itemID }}</td>
     	    		<td class="align-middle">{{ i[1].itemName }}</td>
@@ -38,7 +38,27 @@
                     <td class="align-middle">{{ i[2].email }}</td>
                     <td class="align-middle">{{ i[2].adress }}</td>
                     <td class="align-middle">{{ i[2].phone }}</td>
-    	    		<td class="align-middle">{{ i[0].status }}</td>
+    	    		<td class="align-middle">
+                        <div class="mb-2">
+                            {{ i[0].status }}
+                        </div>
+                        <div class="border-top">
+                            <form action="/orders" method="POST">
+                                {{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
+                                <div class="form-check">
+                                    {{ form.status.label(class="form-control-label") }}
+                                    {{ form.status(class="form-check-label")}}
+                                </div>
+                                <!-- ukryte pole z orderID, z nadanym value z pętli for, aby było wiadomo, którego zamówienia dotyczy -->
+                                <div class="form-group d-none">
+                                    {{ form.orderID(class="form-control", value=i[0].id) }}
+                                </div>
+                                <div class="form-group text-center">
+                                    {{ form.submit(class="btn btn-outline-light btn-sm") }}
+                                </div>
+                            </form>
+                        </div>
+                    </td>
         		</tr>
         		{% endfor %}
         	</tbody>

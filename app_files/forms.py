@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed   # do uploadu obrazów
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from app_files.db_models import User
 
@@ -68,3 +68,11 @@ class UpdateAccountForm(FlaskForm):
             email = User.query.filter_by(email=email.data).first() # jeśli nie ma, zwróci None
             if email:
                 raise ValidationError("Konto z podanym adresem e-mail już istnieje")
+
+
+# Formularz zmiany statusu zamówienia
+class OrderStatusForm(FlaskForm):
+    status = RadioField('Aktualizuj status', choices=[('W trakcie realizacji', 'W trakcie realizacji'),
+        ('Wysłano', "Wysłano"), ('Dostarczono', 'Dostarczono')])
+    orderID = StringField('Nr zamówienia')
+    submit = SubmitField('Zaktualizuj')

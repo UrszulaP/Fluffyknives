@@ -26,7 +26,7 @@
     	<tbody>
     		{% for i in ordersList %}
             <!-- i[0] - join Order, i[1] - join Item -->
-    		<tr>
+    		<tr class="text-nowrap">
 	    		<td class="align-middle">{{ i[0].id }}</td>
 	    		<td><img class="img-fluid Img125 img-responsive" 
           src="{{url_for('static', filename='images/shop/'+ i[1].itemImage)}}" 
