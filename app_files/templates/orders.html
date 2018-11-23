@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block navbarposition %}
+<nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
+{% endblock %}
+
+{% block content %}
+
+<!-- ------------------------------TEKST------------------------------ -->
+
+<div class="container">
+	<h4 class="text-center mt-3 mb-5">Twoje zamówienia</h4>
+
+	<div class="table-responsive">
+        <table class="table">
+        	<thead>
+        		<tr>
+        			<th scope="col">ID zamówienia</th>
+        			<th scope="col">ID przedmiotu</th>
+        			<th scope="col">Nazwa przedmiotu</th>
+        			<th scope="col">Cena</th>
+                    <th scope="col">Id użytkownika</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Adres wysyłki</th>
+                    <th scope="col">Nr tel.</th>
+        			<th scope="col">Status zamówienia</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		{% for i in ordersList %}
+                <!-- i[0] - join Order, i[1] - join Item, i[2] - join User -->
+        		<tr>
+    	    		<td class="align-middle">{{ i[0].id }}</td>
+    	    		<td class="align-middle">{{ i[0].itemID }}</td>
+    	    		<td class="align-middle">{{ i[1].itemName }}</td>
+    	    		<td class="align-middle">{{ i[1].itemPrice }}</td>
+                    <td class="align-middle">{{ i[2].id }}</td>
+                    <td class="align-middle">{{ i[2].email }}</td>
+                    <td class="align-middle">{{ i[2].adress }}</td>
+                    <td class="align-middle">{{ i[2].phone }}</td>
+    	    		<td class="align-middle">{{ i[0].status }}</td>
+        		</tr>
+        		{% endfor %}
+        	</tbody>
+        </table>
+	</div>
+
+</div>
+
+{% endblock content %}
+
+{% block footerposition %}
+<footer class="page-footer font-small pt-2 blue mt-4 fixed-bottom">
+{% endblock %}

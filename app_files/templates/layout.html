@@ -46,29 +46,42 @@
           <a class="nav-link" href="/#contact">Kontakt</a>
         </li>
       </ul>
-      <!-- Zmienna treść - dla użytkownika zalogowanego i dla niezalogowanego -->
-      {% if current_user.is_authenticated %}
-      <ul class="navbar-nav ml-auto">
-        <span class="navbar-text mr-3">Witaj {{ current_user.username }}! :)</span>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('account') }}">Moje konto</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('cart') }}">Koszyk</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
-        </li>
-      </ul>
+      <!-- Zmienna treść - dla admina, użytkownika zalogowanego i dla niezalogowanego -->
+      {% if current_user.email=='admin@admin.admin' %}
+        <ul class="navbar-nav ml-auto">
+          <span class="navbar-text mr-3">KONTO ADMINISTRATORA</span>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('shopmanagement') }}">Zarządzaj sklepem</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('orders') }}">Zamówienia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
+          </li>
+        </ul>
+      {% elif current_user.is_authenticated %}
+        <ul class="navbar-nav ml-auto">
+          <span class="navbar-text mr-3">Witaj {{ current_user.username }}! :)</span>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('account') }}">Moje konto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('cart') }}">Koszyk</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
+          </li>
+        </ul>
       {% else %}
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('register') }}">Załóż konto</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('login') }}">Zaloguj</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('register') }}">Załóż konto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}">Zaloguj</a>
+          </li>
+        </ul>
       {% endif %}
 
     </div>

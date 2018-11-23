@@ -134,6 +134,20 @@ def cart():
 		db.session.commit()
 	# zapytanie zamówień zalogowanego użytkownika
 	# query(Order) - dostęp do Order; query(Order, Item), żeby mieć dostęp też do Item, który dołączamy joinem
-	ordersList = db.session.query(Order, Item).filter(Order.userID == current_user.id).join(Item, Order.itemID == Item.id)
-
+	ordersList = db.session.query(Order, Item).filter(Order.userID==current_user.id).join(Item, Order.itemID==Item.id)
 	return render_template('cart.html', ordersList=ordersList)
+
+
+
+@app.route('/shopmanagement')
+def shopmanagement():
+	return render_template('main.html')
+
+
+
+@app.route('/orders')
+def orders():
+	# query(Order) - zapytanie do Order; query(Order, Item, User), żeby mieć dostęp też do Item i User, dołączanych joinem
+	ordersList = db.session.query(Order, Item, User).join(Item, Order.itemID==Item.id).join(User, Order.userID==User.id).all()
+	print(ordersList)
+	return render_template('orders.html', ordersList=ordersList)
