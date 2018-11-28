@@ -34,7 +34,7 @@ class Item(db.Model):
 	itemName = db.Column(db.String(30), unique=True, nullable=False)
 	itemMainDescription = db.Column(db.String(30))
 	itemPointsDescription = db.Column(db.String(200))
-	itemImage = db.Column(db.String(30))
+	itemImage = db.Column(db.String(30), nullable=False)
 	itemPrice = db.Column(db.Float, nullable=False)
 
 	def __repr__(self):

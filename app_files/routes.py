@@ -1,6 +1,6 @@
 from flask import redirect,	url_for, render_template,	request
 from app_files import app, db, bcrypt
-from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderStatusForm
+from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderStatusForm, NewItemForm
 from app_files.db_models import User, Item, Order
 from flask_login import login_user, current_user, logout_user, login_required
 # secrets do hashowania nazw zdjęć - aby się nie powtarzały
@@ -67,7 +67,7 @@ def register():
 
 
 
-# funkcja do uploadu zdjęcia
+# funkcja do uploadu zdjęcia użytkownika
 def save_picture(form_picture):
 	# generowanie losowego hasha (8 znaków)
 	random_hex = secrets.token_hex(8)
@@ -94,6 +94,7 @@ def account():
 	if form.validate_on_submit():
 		# if, bo dodanie pliku obrazu nie jest wymagane
 		if form.picture.data:
+			# zapisanie pliku zdjęcia do /profile_pictures
 			picture_file = save_picture(form.picture.data)
 			# usuwanie starego zdjęcia
 			if current_user.image_file != 'defaultpp.jpg':
@@ -139,13 +140,52 @@ def cart():
 
 
 
-@app.route('/shopmanagement')
+# funkcja do uploadu zdjęcia przedmiotu
+def save_item_picture(form_picture):
+	# generowanie losowego hasha (8 znaków)
+	random_hex = secrets.token_hex(8)
+	# oddzielenie nazwy i rozszerzenia pliku
+	f_name, file_extension = os.path.splitext(form_picture.filename) # _ - oznaczenie nieużywanej zmiennej
+	picture_filename = random_hex + file_extension
+	# określenie ścieżki zapisu plików
+	picture_path = os.path.join(app.root_path, 'static/images/shop', picture_filename)
+	# zmiana rozmiaru obrazu przy zapisywaniu
+	output_size = (700, 700)
+	resized_picture = Image.open(form_picture)
+	resized_picture.thumbnail(output_size)
+	# zapisywanie obrazu do folderu
+	resized_picture.save(picture_path)
+	# zwraca nazwę pliku, aby zapisać ją w bazie danych
+	return picture_filename
+
+@app.route('/shopmanagement', methods=['GET', 'POST'])
+# dekorator z flask_login
+@login_required
 def shopmanagement():
-	return render_template('main.html')
+	if current_user.email=="admin@admin.admin":
+		form = NewItemForm()
+		# dodawanie nowego przedmiotu
+		if form.validate_on_submit():
+			# zapisanie pliku zdjęcia do /shop, zapisanie zmienionej nazwy pliku zdjęcia
+			item_image = save_item_picture(form.itemImage.data)
+			# dodanie przedmiotu do bazy danych
+			item = Item(itemName=form.itemName.data, 
+				itemMainDescription=form.itemMainDescription.data, 
+				itemPointsDescription=form.itemPointsDescription.data, 
+				itemImage=item_image, 
+				itemPrice=form.itemPrice.data)
+			db.session.add(item)
+			db.session.commit()
+		# lista wszystkich przedmiotów w sklepie do templatki
+		itemsList = Item.query.all()
+		return render_template('shopmanagement.html', itemsList=itemsList, form=form)
+	else:
+		return redirect(url_for('root'))
 
 
 
 @app.route('/orders', methods=['GET', 'POST'])
+# dekorator z flask_login
 @login_required
 def orders():
 	if current_user.email=="admin@admin.admin":
