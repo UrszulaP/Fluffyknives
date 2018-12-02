@@ -8,10 +8,50 @@
 
 <!-- ------------------------------TEKST------------------------------ -->
 
-<!-- Formularz dodawania nowego przedmiotu -->
-
 <div class="container">
-    <h4 class="text-center mt-3 mb-5">Dodawanie asortymentu</h4>
+
+    <!-- Tabela ze wszystkimi przedmiotami w sklepie -->
+
+    <h4 class="text-center mt-3 mb-5">Dostępny asortyment</h4>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col"></th>
+                    <th scope="col">Nazwa</th>
+                    <th scope="col">Opis główny</th>
+                    <th scope="col">Opis dodatkowy</th>
+                    <th scope="col">Cena</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in itemsList %}
+                <tr>
+                    <td class="align-middle">{{ i.id }}</td>
+                    <td><img class="img-fluid Img125 img-responsive" 
+          src="{{url_for('static', filename='images/shop/'+ i.itemImage)}}" 
+          alt="Item image"></td>
+                    <td class="align-middle text-nowrap">{{ i.itemName }}</td>
+                    <td class="align-middle">{{ i.itemMainDescription }}</td>
+                    <td class="align-middle">{{ i.itemPointsDescription }}</td>
+                    <td class="align-middle">{{ i.itemPrice }}</td>
+                    <td class="align-middle">
+                        <form action = "/shopmanagement" method = "POST">
+                            <button class="btn btn-outline-light" name="deletedItemID" value="{{ i.id }}">Usuń</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formularz dodawania nowego przedmiotu -->
+
+    <h4 class="text-center mt-5 mb-5">Dodawanie asortymentu</h4>
 
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-9 col-sm-12">
@@ -98,43 +138,10 @@
         </div>
     </div>
 
-<!-- Tabela ze wszystkimi przedmiotami w sklepie -->
-
-	<h4 class="text-center mt-3 mb-5">Dostępny asortyment</h4>
-
-	<div class="table-responsive">
-        <table class="table">
-        	<thead>
-        		<tr>
-        			<th scope="col">ID</th>
-                    <th scope="col"></th>
-        			<th scope="col">Nazwa</th>
-        			<th scope="col">Opis główny</th>
-        			<th scope="col">Opis dodatkowy</th>
-                    <th scope="col">Cena</th>
-        		</tr>
-        	</thead>
-        	<tbody>
-        		{% for i in itemsList %}
-        		<tr>
-    	    		<td class="align-middle">{{ i.id }}</td>
-                    <td><img class="img-fluid Img125 img-responsive" 
-          src="{{url_for('static', filename='images/shop/'+ i.itemImage)}}" 
-          alt="Item image"></td>
-    	    		<td class="align-middle text-nowrap">{{ i.itemName }}</td>
-                    <td class="align-middle">{{ i.itemMainDescription }}</td>
-                    <td class="align-middle">{{ i.itemPointsDescription }}</td>
-    	    		<td class="align-middle">{{ i.itemPrice }}</td>
-        		</tr>
-        		{% endfor %}
-        	</tbody>
-        </table>
-	</div>
-
 </div>
 
 {% endblock content %}
 
 {% block footerposition %}
-<footer class="page-footer font-small pt-2 blue mt-4 fixed-bottom">
+<footer class="page-footer font-small pt-2 blue mt-4">
 {% endblock %}

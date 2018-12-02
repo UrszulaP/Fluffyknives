@@ -108,7 +108,7 @@ def account():
 		current_user.phone = form.phone.data
 		db.session.commit()
 		# przy ładowaniu ponownie tej samej strony należy użyć redirect -
-		# przy render_template POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza)
+		# przy render_template po odświeżeniu strony POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza)
 		return render_template('updated.html')
 	# wypełnia pola formularza aktualnymi danymi
 	elif request.method == 'GET':
@@ -163,22 +163,44 @@ def save_item_picture(form_picture):
 @login_required
 def shopmanagement():
 	if current_user.email=="admin@admin.admin":
-		form = NewItemForm()
-		# dodawanie nowego przedmiotu
-		if form.validate_on_submit():
-			# zapisanie pliku zdjęcia do /shop, zapisanie zmienionej nazwy pliku zdjęcia
-			item_image = save_item_picture(form.itemImage.data)
-			# dodanie przedmiotu do bazy danych
-			item = Item(itemName=form.itemName.data, 
-				itemMainDescription=form.itemMainDescription.data, 
-				itemPointsDescription=form.itemPointsDescription.data, 
-				itemImage=item_image, 
-				itemPrice=form.itemPrice.data)
-			db.session.add(item)
+		# usuwanie przedmiotu z bazy danych przez formularz z tabeli
+		# try - bo w templatce są 2 formularze, obsługa error przy dodawaniu przedmiotu
+		try:
+			# pobranie itemID z shopmanagement.html
+			deletedItemID = int(request.form['deletedItemID'])
+			# zapytanie o obiekt przedmiotu w bd
+			deletedItem = Item.query.filter_by(id=deletedItemID).first()
+			# usunięcie zdjęcia przedmiotu
+			picture_path = os.path.join(app.root_path, 'static/images/shop', deletedItem.itemImage)
+			os.remove(picture_path)
+			# usunięcie przedmiotu z bd
+			db.session.delete(deletedItem)
 			db.session.commit()
+			# przy ładowaniu ponownie tej samej strony należy użyć redirect -
+			# przy render_template po odświeżeniu strony POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza) i wyskoczą walidacje drugiego formularza
+			return redirect(url_for('shopmanagement'))
+		except:
+			# dodawanie nowego przedmiotu
+			# można wstawić do except, form_newItem zawsze będzie wczytany
+			# należy użyć innej nazwy niż 'form', bo form jest użyty w templatce do usuwania przedmiotów
+			form_newItem = NewItemForm()
+			if form_newItem.validate_on_submit():
+				# zapisanie pliku zdjęcia do /shop, zapisanie zmienionej nazwy pliku zdjęcia
+				item_image = save_item_picture(form_newItem.itemImage.data)
+				# dodanie przedmiotu do bazy danych
+				item = Item(itemName=form_newItem.itemName.data, 
+					itemMainDescription=form_newItem.itemMainDescription.data, 
+					itemPointsDescription=form_newItem.itemPointsDescription.data, 
+					itemImage=item_image, 
+					itemPrice=form_newItem.itemPrice.data)
+				db.session.add(item)
+				db.session.commit()
+				# przy ładowaniu ponownie tej samej strony należy użyć redirect -
+				# przy render_template po odświeżeniu strony POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza) i w formularz pozostanie wypełniony
+				return redirect(url_for('shopmanagement'))
 		# lista wszystkich przedmiotów w sklepie do templatki
 		itemsList = Item.query.all()
-		return render_template('shopmanagement.html', itemsList=itemsList, form=form)
+		return render_template('shopmanagement.html', itemsList=itemsList, form=form_newItem)
 	else:
 		return redirect(url_for('root'))
 
