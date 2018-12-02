@@ -11,7 +11,8 @@
 <div class="container">
 	<div class="row justify-content-md-center">
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-8 col-xs-12 mt-5">
-		  <form action = "/login" method = "POST">
+      <!-- action = "", bo "/login" usuwa argument next querystringa -->
+		  <form action = "" method = "POST">
 		  	{{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
 			  <div class="form-group">
 			  	{{ form.email.label(class="form-control-label") }}
@@ -50,8 +51,6 @@
           {{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
         </div>
 
-        <a href="#" class="text-muted">Zapomniałeś hasła?</a>
-
 		  </form>
 		</div>
 	</div>
@@ -59,6 +58,3 @@
 
 {% endblock content %}
 
-{% block footerposition %}
-<footer class="page-footer font-small pt-2 blue mt-4 fixed-bottom">
-{% endblock %}

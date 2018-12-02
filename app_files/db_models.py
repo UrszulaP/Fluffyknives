@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
 	image_file = db.Column(db.String(20), nullable=False, default='defaultpp.jpg')
 	adress = db.Column(db.String(200))
 	phone = db.Column(db.String(20))
+	isAdmin = db.Column(db.Boolean, default=False)
 
 	def __repr__(self):
 		return f"User('{self.username}', '{self.email}')"

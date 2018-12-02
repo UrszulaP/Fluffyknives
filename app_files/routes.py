@@ -33,9 +33,9 @@ def login():
 			login_user(user, remember=form.remember.data)
 			# pobiera argument next z querystringa i po zalogowaniu przekierowuje
 			# od razu na żądaną stronę (gdzie wymagane było zalogowanie), nie na root
+			# w login.html musi być <form action = "">, aby nie usunęło parametru next
 			# get() zamiast [] - nie wyrzuci błędu tylko None, jeśli parametr nie istnieje
 			next_page = request.args.get('next')
-			print("next_page", next_page)
 			return redirect(next_page) if next_page else redirect(url_for('root'))
 		else:
 			return render_template('login_failed.html')
@@ -89,6 +89,9 @@ def save_picture(form_picture):
 # dekorator z flask_login
 @login_required
 def account():
+	# brak dostępu dla admina
+	if current_user.isAdmin:
+		return redirect(url_for('root'))
 	form = UpdateAccountForm()
 	# zmiana danych użytkownika
 	if form.validate_on_submit():
@@ -126,6 +129,9 @@ def account():
 # dekorator z flask_login
 @login_required
 def cart():
+	# brak dostępu dla admina, brak reakcji na POST po kliknięciu "Zamów" przez admina
+	if current_user.isAdmin:
+		return redirect(url_for('root'))
 	if request.method == 'POST':
 		# pobranie itemID z main.html
 		orderedItemID = int(request.form['orderedItemID'])
@@ -162,7 +168,7 @@ def save_item_picture(form_picture):
 # dekorator z flask_login
 @login_required
 def shopmanagement():
-	if current_user.email=="admin@admin.admin":
+	if current_user.isAdmin:
 		# usuwanie przedmiotu z bazy danych przez formularz z tabeli
 		# try - bo w templatce są 2 formularze, obsługa error przy dodawaniu przedmiotu
 		try:
@@ -210,7 +216,7 @@ def shopmanagement():
 # dekorator z flask_login
 @login_required
 def orders():
-	if current_user.email=="admin@admin.admin":
+	if current_user.isAdmin:
 		form = OrderStatusForm()
 		# zmiana statusu zamówienia w przypadku POST
 		if form.validate_on_submit():
