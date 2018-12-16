@@ -43,13 +43,15 @@
                             {{ i[0].status }}
                         </div>
                         <div class="border-top">
+                            <!-- Formularz zmiany statusu zamówienia -->
                             <form action="/orders" method="POST">
                                 {{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
+                                <!-- Radio button - opcje do wyboru -->
                                 <div class="form-check">
                                     {{ form.status.label(class="form-control-label") }}
                                     {{ form.status(class="form-check-label")}}
                                 </div>
-                                <!-- ukryte pole z orderID, z nadanym value z pętli for, aby było wiadomo, którego zamówienia dotyczy -->
+                                <!-- Ukryte pole z orderID, z nadanym value z pętli for, aby było wiadomo, którego zamówienia dotyczy -->
                                 <div class="form-group d-none">
                                     {{ form.orderID(class="form-control", value=i[0].id) }}
                                 </div>
