@@ -9,114 +9,120 @@
 {% block content %}
 
 <div class="container">
-  <div class="row">
-    <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-xs-12 mt-3">   
-      <div class="media mt-3">
-        <img src="{{image_file}}" class="rounded-circle img-fluid Img125 img-responsive">
-        <div class="media-body">
-          <h3 class="ml-4">{{ current_user.username }}</h3>
-          <p class="text-secondary ml-4">{{ current_user.email }}</p>
-          {% if current_user.adress %}
-            <p class="text-secondary ml-4 mt-4">{{ current_user.adress }}</p>
-          {% else %}
-            <p class="text-secondary ml-5 mt-4">Brak adresu dostawy</p>
-          {% endif %}
-          {% if current_user.phone %}
-            <p class="text-secondary ml-4">{{ current_user.phone }}</p>
-          {% else %}
-            <p class="text-secondary ml-4">Brak numeru telefonu</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
+	<div class="row">
 
-    <div class="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-xs-12 mt-3">
-    	<div class="row">
-    		<div class="col-xl-6 col-lg-8 col-md-12 col-sm-12 col-xs-12 mt-3">
-          <h4 class="text-center mb-5">Zaktualizuj swoje dane</h4>
-          <!-- enctype - trzeba określić, aby możliwy był upload plików -->
-    		  <form action = "/account" method = "POST" enctype="multipart/form-data">
-    		  	{{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
-    			  <div class="form-group">
-    			  	{{ form.username.label(class="form-control-label") }}
-    			    {% if form.username.errors %}
-                {{ form.username(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                  {% for error in form.username.errors %}
-                    <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-              {% else %}
-                {{ form.username(class="form-control") }}
-              {% endif %}
-    				</div>
+		<!-- ---------------------------- ACCOUNT INFO & PICTURE ---------------------------- -->
 
-    				<div class="form-group">
-    					{{ form.email.label(class="form-control-label") }}
-    				  {% if form.email.errors %}
-                {{ form.email(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                  {% for error in form.email.errors %}
-                    <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-              {% else %}
-                {{ form.email(class="form-control") }}
-              {% endif %}
-    				</div>
+		<div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-xs-12 mt-3">   
+			<div class="media mt-3">
+				<img src="{{imageFile}}" class="rounded-circle img-fluid Img125 img-responsive">
+				<div class="media-body ml-4">
+					<h3>{{ current_user.username }}</h3>
+					<p class="text-secondary">{{ current_user.email }}</p>
+					{% if current_user.adress %}
+						<p class="text-secondary">{{ current_user.adress }}</p>
+					{% else %}
+						<p class="text-secondary">Brak adresu dostawy</p>
+					{% endif %}
+					{% if current_user.phone %}
+						<p class="text-secondary">{{ current_user.phone }}</p>
+					{% else %}
+						<p class="text-secondary">Brak numeru telefonu</p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
 
-            <div class="form-group">
-              {{ form.picture.label() }}
-              <div> <!-- div dla dobrego layoutu przy mniejszych ekranach -->
-                {{ form.picture() }}
-              </div>
-              <!-- inny sposób wyrzucania błędów do file field -->
-              {% if form.picture.errors %}
-                {% for error in form.picture.errors %}
-                  <p class="text-danger text-xs">{{ error }}</p>
-                {% endfor %}
-              {% endif %}
-            </div>
+		<!-- ---------------------------- UPDATE ACCOUNT FORM ---------------------------- -->
 
-            <div class="form-group">
-              {{ form.adress.label(class="form-control-label") }}
-              {% if form.adress.errors %}
-                {{ form.adress(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                  {% for error in form.adress.errors %}
-                    <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-              {% else %}
-                {{ form.adress(class="form-control") }}
-              {% endif %}
-            </div>
+		<div class="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-xs-12 mt-3">
+			<div class="row">
+				<div class="col-xl-6 col-lg-8 col-md-12 col-sm-12 col-xs-12 mt-3">
+					<h4 class="text-center mb-5">Zaktualizuj swoje dane</h4>
 
-            <div class="form-group">
-              {{ form.phone.label(class="form-control-label") }}
-              {% if form.phone.errors %}
-                {{ form.phone(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                  {% for error in form.phone.errors %}
-                    <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-              {% else %}
-                {{ form.phone(class="form-control") }}
-              {% endif %}
-            </div>
+					<!-- enctype - needs to be defined to make files upload possible -->
+					<form action = "/account" method = "POST" enctype="multipart/form-data">
+						{{ form.hidden_tag() }} <!-- protection against attacks -->
 
-    				<div class="form-group">
-              {{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
-            </div>
+						<div class="form-group">
+							{{ form.username.label(class="form-control-label") }}
+							{% if form.username.errors %}
+								{{ form.username(class="form-control is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.username.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.username(class="form-control") }}
+							{% endif %}
+						</div>
 
-    		  </form>
-    		</div>
-    	</div>
-    </div>
+						<div class="form-group">
+							{{ form.email.label(class="form-control-label") }}
+							{% if form.email.errors %}
+								{{ form.email(class="form-control is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.email.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.email(class="form-control") }}
+							{% endif %}
+						</div>
 
-  </div>
+						<div class="form-group">
+							{{ form.picture.label() }}
+							<div> <!-- div for good layout on smaller screens -->
+								{{ form.picture() }}
+							</div>
+							<!-- different way of throwing errors to file field -->
+							{% if form.picture.errors %}
+								{% for error in form.picture.errors %}
+									<p class="text-danger text-xs">{{ error }}</p>
+								{% endfor %}
+							{% endif %}
+						</div>
+
+						<div class="form-group">
+							{{ form.adress.label(class="form-control-label") }}
+							{% if form.adress.errors %}
+								{{ form.adress(class="form-control is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.adress.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.adress(class="form-control") }}
+							{% endif %}
+						</div>
+
+						<div class="form-group">
+							{{ form.phone.label(class="form-control-label") }}
+							{% if form.phone.errors %}
+								{{ form.phone(class="form-control is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.phone.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.phone(class="form-control") }}
+							{% endif %}
+						</div>
+
+						<div class="form-group">
+							{{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </div>
-
 
 {% endblock content %}

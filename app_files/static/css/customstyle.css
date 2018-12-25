@@ -1,110 +1,142 @@
-  body {
-    background-image: url("../images/bgimage.jpg");
-  /*  background-position: center top;
-    background-size: 100% auto;*/
-    color: white;
-  }
+/*-------------------- BACKGROUND STYLE ---------------------*/
 
-  /*Style tekstu na karuzeli*/
-  .Toptext {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 12;
-    color: #fff;
-    text-align: center;
-  }
+body {
+	background-image: url("../images/bgimage.jpg");
 
-  .Toptext .Logo {
-    font-family: 'Dancing Script', cursive;
-    font-size: 40px;
-    white-space: nowrap;
-  }
+	color: white;
+}
 
-  .Toptext p {
-    font-size: 12px;
-    font-style: italic;
-  }
+/*------------------ CAROUSEL TEXT STYLES -------------------*/
 
-  .Toptext a {
-    font-size: 24px;
-    font-style: italic;
-  }
+.Toptext {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 
-  /*SM MD*/
-  @media (min-width: 576px) {
-    .Toptext .Logo {
-      font-size: 80px;
-    }
+	color: #fff;
+	text-align: center;
 
-    .Toptext p {
-      font-size: 16px;
-    }
+	transform: translate(-50%, -50%);
+	z-index: 12;
+}
 
-    .Toptext a {
-      font-size: 35px;
-    }
-  }
+.Toptext .Logo {
+	font-family: 'Dancing Script', cursive;
+	font-size: 40px;
+	white-space: nowrap;
+}
 
-  /*LG XL*/
-  @media (min-width: 992px) {
-    .Toptext .Logo {
-      font-size: 100px;
-      padding-bottom: 30px;
-    }
+.Toptext p {
+	font-size: 12px;
+	font-style: italic;
+}
 
-    .Toptext p {
-      font-size: 18px;
-    }
-  }
+.Toptext a {
+	font-size: 24px;
+	font-style: italic;
+}
 
-  /*Styl tła - przezroczyste szare*/
-  .Bggrey {
-    background-color: rgba(31, 29, 29, 0.178);
-  }
+.Toptext .btn:hover {
+	background-color: rgba(255, 255, 255, 0.7);
+}
 
-  /*Style karuzeli*/
-  .carousel-item {
-    height: 100vh;
-    min-height: 300px;
-  }
+/*SM MD*/
 
-  .carousel-item img
-  {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+@media (min-width: 576px) {
+	.Toptext .Logo {
+		font-size: 80px;
+	}
 
-/*Style navbar*/
+	.Toptext p {
+		font-size: 16px;
+	}
+
+	.Toptext a {
+		font-size: 35px;
+	}
+}
+
+/*LG XL*/
+
+@media (min-width: 992px) {
+	.Toptext .Logo {
+		padding-bottom: 30px;
+
+		font-size: 100px;
+	}
+
+	.Toptext p {
+		font-size: 18px;
+	}
+}
+
+/*--------------- TRANSPARENT BACKGROUND STYLE --------------*/
+
+	.Bggrey {
+		background-color: rgba(31, 29, 29, 0.3);
+	}
+
+/*------------------ CAROUSEL ITEMS STYLES ------------------*/
+
+.carousel-item {
+	height: 100vh;
+	min-height: 300px;
+}
+
+.carousel-item img
+{
+	width: 100%;
+	height: 100%;
+
+	object-fit: cover;
+}
+
+/*---------------------- NAVBAR STYLES ----------------------*/
+
 .navbar-shrink {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+	background-color: rgba(0, 0, 0, 0.8);
+}
 
 #navbarMain .nav-link, #navbarMain .navbar-toggler {
-  color: #fff;
+	color: #fff;
 }
 
-/*Style kart z nożami*/
+.nav-item:hover {
+	border-radius: 10px;
+
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+/*--------------------- ITEMS CARDS STYLE -------------------*/
+
 .card {
-  background-color: rgba(255, 255, 255, 0.85);
+	background-color: rgba(255, 255, 255, 0.85);
 }
 
-/*Style tekstów*/
+/*----------------------- TEXT STYLES -----------------------*/
+
 .Sekcja {
-  font-family: 'Markazi Text', serif;
-  font-size: 70px;
-  padding-top: 100px;
+	padding-top: 100px;
+
+	font-family: 'Markazi Text', serif;
+	font-size: 70px;
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.5);
-    margin: 0;
+	margin: 0;
+
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
-/*Style dodawanych obrazów*/
+/*---------------------- IMAGES STYLES ----------------------*/
+
 .Img125 {
-  max-height: 125px; 
-  max-width: 125px;
+	max-height: 125px; 
+	max-width: 125px;
+}
+
+/*--------------- TEXT EDITOR BLACK TEXT STYLE --------------*/
+
+.Blacktext {
+	color: black;
 }

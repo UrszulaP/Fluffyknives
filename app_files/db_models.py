@@ -1,24 +1,24 @@
 from app_files import db, login_manager
 from flask_login import UserMixin
-# klasa UserMixin zawiera wymagane przez rozszerzenie flask_login funkcje
-# is_authenticated, is_active, is_anonymous, get_id
-# trzeba je dodać do dziedziczenia klas bazy danych
+# UserMixin class contains functions required by flask_login
+# (is_authenticated, is_active, is_anonymous, get_id)
+# UserMixin needs to be added to User class inheritance
 
-# funkcja potrzebna do wskazania user_id do login_manager
+# function needed to indicate user_id for login_manager
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
 
-# ------------------------------SCHEMAT BAZY DANYCH----------------------------------#
+#------------------------------ DATABASE SCHEME ----------------------------------#
 
 class User(db.Model, UserMixin):
-	__tablename__ = 'User'	# trzeba nadać nazwę, aby relationship działał
+	__tablename__ = 'User' # name needs to be given to make relationship working
 
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(20), unique=True, nullable=False)
 	email = db.Column(db.String(120), unique=True, nullable=False)
 	password = db.Column(db.String(60), nullable=False)
-	image_file = db.Column(db.String(20), nullable=False, default='defaultpp.jpg')
+	imageFile = db.Column(db.String(20), nullable=False, default='defaultpp.jpg')
 	adress = db.Column(db.String(200))
 	phone = db.Column(db.String(20))
 	isAdmin = db.Column(db.Boolean, default=False)
@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
 
 
 class Item(db.Model):
-	__tablename__ = 'Item'	# trzeba nadać nazwę, aby relationship działał
+	__tablename__ = 'Item' # name needs to be given to make relationship working
 
 	id = db.Column(db.Integer, primary_key=True)
 	itemName = db.Column(db.String(30), unique=True, nullable=False)
@@ -45,8 +45,8 @@ class Item(db.Model):
 
 class Order(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	itemID = db.Column(db.ForeignKey('Item.id'))	# nullable=Flase powoduje błąd przy dodawaniu nowego wiersza
-	userID = db.Column(db.ForeignKey('User.id'))	# j.w.
+	itemID = db.Column(db.ForeignKey('Item.id'))  # nullable=Flase causes an error when a new row is added in my db editor
+	userID = db.Column(db.ForeignKey('User.id'))  # as above
 	status = db.Column(db.String, nullable = False, default='W trakcie realizacji')
 
 	item = db.relationship('Item', backref="user_associations")

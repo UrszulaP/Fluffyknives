@@ -4,9 +4,8 @@ Online shop app created with Python, Flask, SQLAlchemy, Bootstrap.
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Setup](#setup)
 * [Features](#features)
-* [Status](#status)
+* [Setup](#setup)
 * [Inspiration](#inspiration)
 * [Contact](#contact)
 
@@ -20,25 +19,21 @@ All of the content comes from our knives crafting work and we wanted to present 
 * SQLAlchemy 1.2.9
 * Bootstrap 4.1.1
 
-Requirements:
-bcrypt==3.1.4
-cffi==1.11.5
-click==6.7
-Flask==1.0.2
-Flask-Bcrypt==0.7.1
-Flask-Login==0.4.1
-Flask-SQLAlchemy==2.3.2
-Flask-WTF==0.14.2
-gunicorn==19.7.1
-itsdangerous==0.24
-Jinja2==2.10
-MarkupSafe==1.0
-Pillow==5.2.0
-pycparser==2.18
-six==1.11.0
-SQLAlchemy==1.2.9
-Werkzeug==0.14.1
-WTForms==2.2.1
+## Features
+* Shop presentation with info and avaliable products generated from the shop database
+* Different templates for not logged user, logged user and admin
+
+User account:
+* User account registration, login and logout
+* User account data editing, adding profile photo
+* Making orders
+* User orders page with order status info
+
+Admin account:
+* Adding new products to the shop database, with product description and photo
+* Deleting products from the database
+* Orders page with all users orders info
+* Ability to change order's status
 
 ## Setup
 To run the app:
@@ -62,27 +57,28 @@ To run the app:
 6. Run the app from main app folder:
 		python run.py
 
+Requirements:
+bcrypt==3.1.4
+cffi==1.11.5
+click==6.7
+Flask==1.0.2
+Flask-Bcrypt==0.7.1
+Flask-Login==0.4.1
+Flask-SQLAlchemy==2.3.2
+Flask-WTF==0.14.2
+gunicorn==19.7.1
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+Pillow==5.2.0
+pycparser==2.18
+six==1.11.0
+SQLAlchemy==1.2.9
+Werkzeug==0.14.1
+WTForms==2.2.1
+
 Link to deployed app:
 http://fluffyknives.herokuapp.com/
-
-## Features
-* Shop presentation with info and avaliable products generated from the shop database
-* Different templates for not logged user, logged user and admin
-
-User account:
-* User account registration, login and logout
-* User account info editing, adding profile photo
-* Making orders
-* User orders page with order status info
-
-Admin account:
-* Adding new products to the shop database, with product description and photo
-* Deleting products from the database
-* Orders page with all users orders info
-* Ability to change order's status
-
-## Status
-Project is in progress - still needs some fixing.
 
 ## Inspiration
 All of the content comes from our knives crafting work. 

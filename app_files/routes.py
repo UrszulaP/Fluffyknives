@@ -1,16 +1,13 @@
-from flask import redirect,	url_for, render_template,	request
+from flask import redirect, url_for, render_template, request
 from app_files import app, db, bcrypt
 from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderStatusForm, NewItemForm
 from app_files.db_models import User, Item, Order
 from flask_login import login_user, current_user, logout_user, login_required
-# secrets do hashowania nazw zdjęć - aby się nie powtarzały
-import secrets
-# do wyciągnięcia rozszerzenia pliku
-import os
-# zainstalowano Pillow - do zmiany rozmiaru obrazów
-from PIL import Image
+import secrets # secrets for images names hashing - to make it not repeted
+import os # os to get file extention name
+from PIL import Image # Pillow - to change images size
 
-# ------------------------------------WIDOKI-----------------------------------------#
+#------------------------------------ MAIN PAGE -----------------------------------------#
 
 @app.route('/')
 def root():
@@ -18,30 +15,32 @@ def root():
 	return render_template('main.html', itemsList=itemsList)
 
 
+#------------------------------------ LOGIN PAGE ----------------------------------------#
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	# sprawdza, czy użytkownik jest już zalogowany - wbudowana funkcja flask_login
+	# checks if the current user is logged in - built-in function from flask_login
 	if current_user.is_authenticated:
 		return redirect(url_for('root'))
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
-		# wbudowana funkcja bcrypt, porównująca hasło z bd z hasłem z formularza
+		# built-in function from bcrypt, comparing password from the db with password from the form
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
-			# wbudowana funkcja flask-login, arg. remember pobiera z checkboxa formularza
+			# built-in function from flask-login, remember argue takes value from the form checkbox "Remember Me"
 			login_user(user, remember=form.remember.data)
-			# pobiera argument next z querystringa i po zalogowaniu przekierowuje
-			# od razu na żądaną stronę (gdzie wymagane było zalogowanie), nie na root
-			# w login.html musi być <form action = "">, aby nie usunęło parametru next
-			# get() zamiast [] - nie wyrzuci błędu tylko None, jeśli parametr nie istnieje
-			next_page = request.args.get('next')
-			return redirect(next_page) if next_page else redirect(url_for('root'))
+			# takes 'next' argue from querystring and after login redirecs at once for requested page,
+			# (where login was required), not to root
+			# in login.html needs to be <form action = ""> not to delete 'next' parameter
+			# get() instead of [] - if 'next' parameter doesn`t exist, it will return None instead of throwing an error
+			nextPage = request.args.get('next')
+			return redirect(nextPage) if nextPage else redirect(url_for('root'))
 		else:
 			return render_template('login_failed.html')
 	return render_template('login.html', form=form)
 
 
+#----------------------------------- LOGOUT PAGE ----------------------------------------#
 
 @app.route('/logout')
 def logout():
@@ -49,186 +48,193 @@ def logout():
 	return redirect(url_for('root'))
 
 
+#-------------------------------- REGISTRATION PAGE -------------------------------------#
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-	# sprawdza, czy użytkownik jest już zalogowany - wbudowana funkcja flask_login
-  if current_user.is_authenticated:
-    return redirect(url_for('root'))
-  form = RegistrationForm()
-  if form.validate_on_submit():
-    hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-    # user_id stworzy się automatycznie, kolejne
-    user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-    db.session.add(user)
-    db.session.commit()
-    return render_template('register_ok.html')
-  return render_template('register.html', form=form)
+	# checks if the current user is logged in - built-in function from flask_login
+	if current_user.is_authenticated:
+		return redirect(url_for('root'))
+	form = RegistrationForm()
+	if form.validate_on_submit():
+		hashedPassword = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		# next user_id is created automatically
+		user = User(username=form.username.data, email=form.email.data, password=hashedPassword)
+		db.session.add(user)
+		db.session.commit()
+		return render_template('register_ok.html')
+	return render_template('register.html', form=form)
 
 
+#---------------------------------- ACCOUNT PAGE ----------------------------------------#
 
-# funkcja do uploadu zdjęcia użytkownika
-def save_picture(form_picture):
-	# generowanie losowego hasha (8 znaków)
-	random_hex = secrets.token_hex(8)
-	# oddzielenie nazwy i rozszerzenia pliku
-	f_name, file_extension = os.path.splitext(form_picture.filename) # _ - oznaczenie nieużywanej zmiennej
-	picture_filename = random_hex + file_extension
-	# określenie ścieżki zapisu plików
-	picture_path = os.path.join(app.root_path, 'static/images/profile_pictures', picture_filename)
-	# zmiana rozmiaru obrazu przy zapisywaniu
-	output_size = (125, 125)
-	resized_picture = Image.open(form_picture)
-	resized_picture.thumbnail(output_size)
-	# zapisywanie obrazu do folderu
-	resized_picture.save(picture_path)
-	# zwraca nazwę pliku, aby zapisać ją w bazie danych
-	return picture_filename
+# profile upload function
+def savePicture(formPicture):
+	# generates random hash (8 characters)
+	randomHex = secrets.token_hex(8)
+	# separates file name and file extention
+	fName, fileExtension = os.path.splitext(formPicture.filename) # _ - sign of unused value
+	pictureFilename = randomHex + fileExtension
+	# defines path to save picture
+	picturePath = os.path.join(app.root_path, 'static/images/profile_pictures', pictureFilename)
+	# changes the image size while saving
+	outputSize = (125, 125)
+	resizedPicture = Image.open(formPicture)
+	resizedPicture.thumbnail(outputSize)
+	# saves picture to the folder
+	resizedPicture.save(picturePath)
+	# returns file name to save it in the database
+	return pictureFilename
 
 @app.route('/account', methods=['GET', 'POST'])
-# dekorator z flask_login
+# decorator from flask_login
 @login_required
 def account():
-	# brak dostępu dla admina
+	# no access for admin
 	if current_user.isAdmin:
 		return redirect(url_for('root'))
 	form = UpdateAccountForm()
-	# zmiana danych użytkownika
+	# user data changing
 	if form.validate_on_submit():
-		# if, bo dodanie pliku obrazu nie jest wymagane
+		# if, because adding a profile picture is not required
 		if form.picture.data:
-			# zapisanie pliku zdjęcia do /profile_pictures
-			picture_file = save_picture(form.picture.data)
-			# usuwanie starego zdjęcia
-			if current_user.image_file != 'defaultpp.jpg':
-				old_picture_path = os.path.join(app.root_path, 'static/images/profile_pictures', current_user.image_file)
-				os.remove(old_picture_path)
-			current_user.image_file = picture_file
+			# saving picture file to /profile_pictures
+			pictureFile = savePicture(form.picture.data)
+			# deleting an old profile picture
+			if current_user.imageFile != 'defaultpp.jpg':
+				oldPicturePath = os.path.join(app.root_path, 'static/images/profile_pictures', current_user.imageFile)
+				os.remove(oldPicturePath)
+			current_user.imageFile = pictureFile
 			
 		current_user.username = form.username.data
 		current_user.email = form.email.data
 		current_user.adress = form.adress.data
 		current_user.phone = form.phone.data
 		db.session.commit()
-		# przy ładowaniu ponownie tej samej strony należy użyć redirect -
-		# przy render_template po odświeżeniu strony POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza)
+		# while rendering the same page, redirect must me used -
+		# if render_template is used, after refreshing the page, POST will be resend (appears a question about resending the form)
 		return render_template('updated.html')
-	# wypełnia pola formularza aktualnymi danymi
+	# fills form fields with the current values
 	elif request.method == 'GET':
 		form.username.data = current_user.username
 		form.email.data = current_user.email
 		form.adress.data = current_user.adress
 		form.phone.data = current_user.phone
-	# określa ścieżkę do zdjęcia profilowego
-	image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_file)
-	return render_template('account.html', form=form, image_file=image_file)
+	# determines the profile picture path
+	imageFile = url_for('static', filename='images/profile_pictures/' + current_user.imageFile)
+	return render_template('account.html', form=form, imageFile=imageFile)
 
 
+#--------------------------------- USER ORDERS PAGE -------------------------------------#
 
 @app.route('/cart', methods=['GET', 'POST'])
 # dekorator z flask_login
 @login_required
 def cart():
-	# brak dostępu dla admina, brak reakcji na POST po kliknięciu "Zamów" przez admina
+	# no access for admin, no reaction for POST after click on "Zamów" by admin
 	if current_user.isAdmin:
 		return redirect(url_for('root'))
 	if request.method == 'POST':
-		# pobranie itemID z main.html
+		# takes itemID from main.html
 		orderedItemID = int(request.form['orderedItemID'])
-		# stworzenie obiektu zamówienia, dodanie go do bazy danych
+		# makes an order object, adds it to the database
 		order = Order(itemID=orderedItemID, userID=current_user.id)
 		db.session.add(order)
 		db.session.commit()
-	# zapytanie zamówień zalogowanego użytkownika
-	# query(Order) - dostęp do Order; query(Order, Item), żeby mieć dostęp też do Item, który dołączamy joinem
+	# queries about orders of logged user
+	# query(Order) - acces to Order; query(Order, Item), to make access to Item as well, which is joint by join clause
 	ordersList = db.session.query(Order, Item).filter(Order.userID==current_user.id).join(Item, Order.itemID==Item.id)
 	return render_template('cart.html', ordersList=ordersList)
 
 
+#------------------------------- SHOP MANAGEMENT PAGE -----------------------------------#
 
-# funkcja do uploadu zdjęcia przedmiotu
-def save_item_picture(form_picture):
-	# generowanie losowego hasha (8 znaków)
-	random_hex = secrets.token_hex(8)
-	# oddzielenie nazwy i rozszerzenia pliku
-	f_name, file_extension = os.path.splitext(form_picture.filename) # _ - oznaczenie nieużywanej zmiennej
-	picture_filename = random_hex + file_extension
-	# określenie ścieżki zapisu plików
-	picture_path = os.path.join(app.root_path, 'static/images/shop', picture_filename)
-	# zmiana rozmiaru obrazu przy zapisywaniu
-	output_size = (700, 700)
-	resized_picture = Image.open(form_picture)
-	resized_picture.thumbnail(output_size)
-	# zapisywanie obrazu do folderu
-	resized_picture.save(picture_path)
-	# zwraca nazwę pliku, aby zapisać ją w bazie danych
-	return picture_filename
+# item picture upload function
+def saveItemPicture(formPicture):
+	# generates random hash (8 characters)
+	randomHex = secrets.token_hex(8)
+	# separates file name and file extention
+	fName, fileExtension = os.path.splitext(formPicture.filename) # _ - sign of unused value
+	pictureFilename = randomHex + fileExtension
+	# defines path to save picture
+	picturePath = os.path.join(app.root_path, 'static/images/shop', pictureFilename)
+	# changes the image size while saving
+	outputSize = (700, 700)
+	resizedPicture = Image.open(formPicture)
+	resizedPicture.thumbnail(outputSize)
+	# saves picture to the folder
+	resizedPicture.save(picturePath)
+	# returns file name to save it in the database
+	return pictureFilename
 
 @app.route('/shopmanagement', methods=['GET', 'POST'])
-# dekorator z flask_login
+# decorator from flask_login
 @login_required
 def shopmanagement():
 	if current_user.isAdmin:
-		# usuwanie przedmiotu z bazy danych przez formularz z tabeli
-		# try - bo w templatce są 2 formularze, obsługa error przy dodawaniu przedmiotu
+		# deletes item from the database by form from itmes table
+		# try - because there are 2 forms in template, handles an error while adding an item
 		try:
-			# pobranie itemID z shopmanagement.html
+			# takes itemID from shopmanagement.html
 			deletedItemID = int(request.form['deletedItemID'])
-			# zapytanie o obiekt przedmiotu w bd
+			# queries about item object from database
 			deletedItem = Item.query.filter_by(id=deletedItemID).first()
-			# usunięcie zdjęcia przedmiotu
-			picture_path = os.path.join(app.root_path, 'static/images/shop', deletedItem.itemImage)
-			os.remove(picture_path)
-			# usunięcie przedmiotu z bd
+			# deletes item picture
+			picturePath = os.path.join(app.root_path, 'static/images/shop', deletedItem.itemImage)
+			os.remove(picturePath)
+			# deletes an item from the database
 			db.session.delete(deletedItem)
 			db.session.commit()
-			# przy ładowaniu ponownie tej samej strony należy użyć redirect -
-			# przy render_template po odświeżeniu strony POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza) i wyskoczą walidacje drugiego formularza
+			# while rendering the same page, redirect must me used -
+			# if render_template is used, after refreshing the page, POST will be resend (appears a question about resending the form)
+			# and validation of the second form will apear
 			return redirect(url_for('shopmanagement'))
 		except:
-			# dodawanie nowego przedmiotu
-			# można wstawić do except, form_newItem zawsze będzie wczytany
-			# należy użyć innej nazwy niż 'form', bo form jest użyty w templatce do usuwania przedmiotów
-			form_newItem = NewItemForm()
-			if form_newItem.validate_on_submit():
-				# zapisanie pliku zdjęcia do /shop, zapisanie zmienionej nazwy pliku zdjęcia
-				item_image = save_item_picture(form_newItem.itemImage.data)
-				# dodanie przedmiotu do bazy danych
-				item = Item(itemName=form_newItem.itemName.data, 
-					itemMainDescription=form_newItem.itemMainDescription.data, 
-					itemPointsDescription=form_newItem.itemPointsDescription.data, 
-					itemImage=item_image, 
-					itemPrice=form_newItem.itemPrice.data)
+			# adds a new item
+			# it may be in except, form will always be loaded
+			# name different from 'form' must be used, because 'form' is already used in template to delete items
+			formNewItem = NewItemForm()
+			if formNewItem.validate_on_submit():
+				# saves image file to /shop, saves changed name of the picture
+				newItemImage = saveItemPicture(formNewItem.itemImage.data)
+				# adds item to the database
+				item = Item(itemName=formNewItem.itemName.data, 
+					itemMainDescription=formNewItem.itemMainDescription.data, 
+					itemPointsDescription=formNewItem.itemPointsDescription.data, 
+					itemImage=newItemImage, 
+					itemPrice=formNewItem.itemPrice.data)
 				db.session.add(item)
 				db.session.commit()
-				# przy ładowaniu ponownie tej samej strony należy użyć redirect -
-				# przy render_template po odświeżeniu strony POST będzie wysyłany ponownie (wyskoczy komunikat z pytniem o ponowne przesłanie formularza) i w formularz pozostanie wypełniony
+				# while rendering the same page, redirect must me used -
+			# if render_template is used, after refreshing the page, POST will be resend (appears a question about resending the form)
+			# and the form will stay filled
 				return redirect(url_for('shopmanagement'))
-		# lista wszystkich przedmiotów w sklepie do templatki
+		# list of all of the items in shop to the template
 		itemsList = Item.query.all()
-		return render_template('shopmanagement.html', itemsList=itemsList, form=form_newItem)
+		return render_template('shopmanagement.html', itemsList=itemsList, form=formNewItem)
 	else:
 		return redirect(url_for('root'))
 
 
+#--------------------------------- ALL ORDERS PAGE --------------------------------------#
 
 @app.route('/orders', methods=['GET', 'POST'])
-# dekorator z flask_login
+# decorator from flask_login
 @login_required
 def orders():
 	if current_user.isAdmin:
 		form = OrderStatusForm()
-		# zmiana statusu zamówienia w przypadku POST
+		# changes order status in case of POST
 		if form.validate_on_submit():
-			# pobranie numeru zamówienia, którego dotyczy zmiana
+			# takes order number, which change refers to
 			orderID = form.orderID.data
-			# zapytanie o zamówienie wg jego id
+			# queries about order object by its id
 			order = db.session.query(Order).filter(Order.id==orderID).first()
-			# zmiana statusu zamówienia w bazie danych
+			# changes order status in the database
 			order.status = form.status.data
 			db.session.commit()
-		# zapytanie wszystkich zamówień
-		# query(Order) - zapytanie do Order; query(Order, Item, User), żeby mieć dostęp też do Item i User, dołączanych joinem
+		# queries about all orders
+		# query(Order) - queries Order; query(Order, Item), to make access to Item and User as well, which are joint by join clause
 		ordersList = db.session.query(Order, Item, User).join(Item, Order.itemID==Item.id).join(User, Order.userID==User.id).all()
 		return render_template('orders.html', ordersList=ordersList, form=form)
 	else:

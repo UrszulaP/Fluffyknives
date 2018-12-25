@@ -6,65 +6,72 @@
 
 {% block content %}
 
-<!-- ------------------------------TEKST------------------------------ -->
+<!-- ------------------------------ ALL ORDERS TABLE ------------------------------ -->
 
 <div class="container">
 	<h4 class="text-center mt-3 mb-5">Zamówienia</h4>
 
 	<div class="table-responsive">
-        <table class="table">
-        	<thead>
-        		<tr>
-        			<th scope="col">ID zamówienia</th>
-        			<th scope="col">ID przedmiotu</th>
-        			<th scope="col">Nazwa przedmiotu</th>
-        			<th scope="col">Cena</th>
-                    <th scope="col">Id użytkownika</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Adres wysyłki</th>
-                    <th scope="col">Nr tel.</th>
-        			<th scope="col">Status zamówienia</th>
-        		</tr>
-        	</thead>
-        	<tbody>
-        		{% for i in ordersList %}
-                <!-- i[0] - join Order, i[1] - join Item, i[2] - join User -->
-        		<tr class="text-nowrap">
-    	    		<td class="align-middle">{{ i[0].id }}</td>
-    	    		<td class="align-middle">{{ i[0].itemID }}</td>
-    	    		<td class="align-middle">{{ i[1].itemName }}</td>
-    	    		<td class="align-middle">{{ i[1].itemPrice }}</td>
-                    <td class="align-middle">{{ i[2].id }}</td>
-                    <td class="align-middle">{{ i[2].email }}</td>
-                    <td class="align-middle">{{ i[2].adress }}</td>
-                    <td class="align-middle">{{ i[2].phone }}</td>
-    	    		<td class="align-middle">
-                        <div class="mb-2">
-                            {{ i[0].status }}
-                        </div>
-                        <div class="border-top">
-                            <!-- Formularz zmiany statusu zamówienia -->
-                            <form action="/orders" method="POST">
-                                {{ form.hidden_tag() }} <!-- zabezpieczenie przed atakami -->
-                                <!-- Radio button - opcje do wyboru -->
-                                <div class="form-check">
-                                    {{ form.status.label(class="form-control-label") }}
-                                    {{ form.status(class="form-check-label")}}
-                                </div>
-                                <!-- Ukryte pole z orderID, z nadanym value z pętli for, aby było wiadomo, którego zamówienia dotyczy -->
-                                <div class="form-group d-none">
-                                    {{ form.orderID(class="form-control", value=i[0].id) }}
-                                </div>
-                                <div class="form-group text-center">
-                                    {{ form.submit(class="btn btn-outline-light btn-sm") }}
-                                </div>
-                            </form>
-                        </div>
-                    </td>
-        		</tr>
-        		{% endfor %}
-        	</tbody>
-        </table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">ID zamówienia</th>
+					<th scope="col">ID przedmiotu</th>
+					<th scope="col">Nazwa przedmiotu</th>
+					<th scope="col">Cena</th>
+					<th scope="col">Id użytkownika</th>
+					<th scope="col">Email</th>
+					<th scope="col">Adres wysyłki</th>
+					<th scope="col">Nr tel.</th>
+					<th scope="col">Status zamówienia</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for i in ordersList %}
+				<!-- i[0] - join Order, i[1] - join Item, i[2] - join User -->
+				<tr class="text-nowrap">
+					<td class="align-middle">{{ i[0].id }}</td>
+					<td class="align-middle">{{ i[0].itemID }}</td>
+					<td class="align-middle">{{ i[1].itemName }}</td>
+					<td class="align-middle">{{ i[1].itemPrice }}</td>
+					<td class="align-middle">{{ i[2].id }}</td>
+					<td class="align-middle">{{ i[2].email }}</td>
+					<td class="align-middle">{{ i[2].adress }}</td>
+					<td class="align-middle">{{ i[2].phone }}</td>
+
+					<td class="align-middle">
+						<div class="mb-2">
+							{{ i[0].status }}
+						</div>
+						<div class="border-top">
+							
+							<!-- Status order change form -->
+							<form action="/orders" method="POST">
+								{{ form.hidden_tag() }} <!-- protection against attacks -->
+
+								<!-- Radio buttons with options to choose -->
+								<div class="form-check">
+									{{ form.status.label(class="form-control-label") }}
+									{{ form.status(class="form-check-label")}}
+								</div>
+
+								<!-- Hidden field with inserted orderID (value taken from the for loop), to find out which order it refers -->
+								<div class="form-group d-none">
+									{{ form.orderID(class="form-control", value=i[0].id) }}
+								</div>
+
+								<div class="form-group text-center">
+									{{ form.submit(class="btn btn-outline-light btn-sm") }}
+								</div>
+
+							</form>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 
 </div>
