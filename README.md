@@ -59,40 +59,24 @@ To run the app:
 		python run.py
 
 Requirements:
+
 bcrypt==3.1.4
-
 cffi==1.11.5
-
 click==6.7
-
 Flask==1.0.2
-
 Flask-Bcrypt==0.7.1
-
 Flask-Login==0.4.1
-
 Flask-SQLAlchemy==2.3.2
-
 Flask-WTF==0.14.2
-
 gunicorn==19.7.1
-
 itsdangerous==0.24
-
 Jinja2==2.10
-
 MarkupSafe==1.0
-
 Pillow==5.2.0
-
 pycparser==2.18
-
 six==1.11.0
-
 SQLAlchemy==1.2.9
-
 Werkzeug==0.14.1
-
 WTForms==2.2.1
 
 Link to deployed app:
@@ -101,11 +85,11 @@ http://fluffyknives.herokuapp.com/
 ## Inspiration
 All of the content comes from our knives crafting work. 
 
-All of the photos and video are my job.
+All of the photos and the video are my job.
 
 The app was partly based on Flask tutorial: https://www.youtube.com/watch?v=MwZwr5Tvyxo
 
-JS for navbar was taken from https://startbootstrap.com/ and remade.
+JS for navbar was taken from https://startbootstrap.com/ , JS for smooth scrolling was taken from https://css-tricks.com/snippets/jquery/smooth-scrolling/
 
 All other sources of knowledge are:
 * Python, Bootstrap, Flask framework and libraries documentations

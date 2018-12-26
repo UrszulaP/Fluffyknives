@@ -1,3 +1,5 @@
+// JS from startbootstrap.com
+
   // Collapse Navbar
   var navbarCollapse = function() {
     if ($("#navbarMain").offset().top > 50) {
