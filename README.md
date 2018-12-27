@@ -1,6 +1,8 @@
 # Fluffy Knives - online shop app
 Online shop app created with Python, Flask, SQLAlchemy, Bootstrap.
 
+Link to deployed app: http://fluffyknives.herokuapp.com/
+
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
@@ -78,9 +80,6 @@ six==1.11.0
 SQLAlchemy==1.2.9
 Werkzeug==0.14.1
 WTForms==2.2.1
-
-Link to deployed app:
-http://fluffyknives.herokuapp.com/
 
 ## Inspiration
 All of the content comes from our knives crafting work. 
