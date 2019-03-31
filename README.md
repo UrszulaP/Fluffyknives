@@ -38,6 +38,10 @@ Admin account:
 * Orders page with all users orders info
 * Ability to change order's status
 
+Admin login credentials:
+login: admin@admin.admin
+password: admin
+
 ## Setup
 To run the app:
 1. Install Python 3.6.3
