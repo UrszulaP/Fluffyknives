@@ -39,7 +39,9 @@ Admin account:
 * Ability to change order's status
 
 Admin login credentials:
+
 login: admin@admin.admin
+
 password: admin
 
 ## Setup
