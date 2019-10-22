@@ -46,46 +46,9 @@ password: admin
 
 ## Setup
 To run the app:
-1. Install Python 3.6.3
-2. Install virtual environment:
-		python -m venv [path]
-3. Run virtual environment:
-		[path]\Scripts\activate.bat
-4. Install Flask micro-framework:
-		pip install Flask
-5. Install WTForms:
-		pip install flask-wtf
-6. Install Flask-SQLAlchemy:
-		pip install flask-sqlalchemy
-7. Install Flask-Bcrypt:
-		pip install flask-bcrypt
-8. Install Flask-Login:
-		pip install flask-login
-5. Install Pillow:
-		pip install Pillow
-6. Run the app from main app folder:
-		python run.py
 
-Requirements:
-
-bcrypt==3.1.4
-cffi==1.11.5
-click==6.7
-Flask==1.0.2
-Flask-Bcrypt==0.7.1
-Flask-Login==0.4.1
-Flask-SQLAlchemy==2.3.2
-Flask-WTF==0.14.2
-gunicorn==19.7.1
-itsdangerous==0.24
-Jinja2==2.10
-MarkupSafe==1.0
-Pillow==5.2.0
-pycparser==2.18
-six==1.11.0
-SQLAlchemy==1.2.9
-Werkzeug==0.14.1
-WTForms==2.2.1
+pip install -r requirements.txt
+python run.py
 
 ## Inspiration
 All of the content comes from our knives crafting work. 

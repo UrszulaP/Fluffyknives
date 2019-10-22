@@ -12,10 +12,6 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt()
 
 login_manager = LoginManager(app)
-# determines where an unlogged user is redirected
-# while using @login_required (from flask-login) for a particular view
-# here - redirect to url_for('login')
 login_manager.login_view = 'login'
 
-# import writen here to avoid circular import error
-from app_files import routes
+from app_files import routes  # import here to avoid circular import error
