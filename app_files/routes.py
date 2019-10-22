@@ -8,6 +8,41 @@ import secrets
 import os
 from PIL import Image
 
+def save_user_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    file_name, file_extension = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_extension
+    picture_path = os.path.join(app.root_path, 
+                               'static/images/profile_pictures', 
+                               picture_filename)
+    output_size = (125, 125)
+    resized_picture = Image.open(form_picture)
+    resized_picture.thumbnail(output_size)
+    resized_picture.save(picture_path)
+    return picture_filename
+
+def delete_old_picture(user):
+    if user.image_file != 'defaultpp.jpg':
+        old_picture_path = os.path.join(app.root_path, 
+                                      'static/images/profile_pictures', 
+                                      user.image_file)
+        os.remove(old_picture_path)
+
+def save_item_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    file_name, file_extension = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_extension
+    picture_path = os.path.join(app.root_path, 
+                               'static/images/shop', 
+                               picture_filename)
+    output_size = (700, 700)
+    resized_picture = Image.open(form_picture)
+    resized_picture.thumbnail(output_size)
+    resized_picture.save(picture_path)
+    return picture_filename
+
+
+
 @app.route('/')
 def root():
     items_list = Item.query.all()
@@ -59,19 +94,6 @@ def register():
     return render_template('register.html', form=form)
 
 
-def save_user_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    file_name, file_extension = os.path.splitext(form_picture.filename)
-    picture_filename = random_hex + file_extension
-    picture_path = os.path.join(app.root_path, 
-                               'static/images/profile_pictures', 
-                               picture_filename)
-    output_size = (125, 125)
-    resized_picture = Image.open(form_picture)
-    resized_picture.thumbnail(output_size)
-    resized_picture.save(picture_path)
-    return picture_filename
-
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
@@ -82,11 +104,7 @@ def account():
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_user_picture(form.picture.data)
-            if current_user.image_file != 'defaultpp.jpg':
-                old_picture_path = os.path.join(app.root_path, 
-                                              'static/images/profile_pictures', 
-                                              current_user.image_file)
-                os.remove(old_picture_path)
+            delete_old_picture(current_user)
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -121,19 +139,6 @@ def cart():
                       .join(Item, Order.item_ID==Item.id))
     return render_template('cart.html', user_orders_list=user_orders_list)
 
-
-def save_item_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    file_name, file_extension = os.path.splitext(form_picture.filename)
-    picture_filename = random_hex + file_extension
-    picture_path = os.path.join(app.root_path, 
-                               'static/images/shop', 
-                               picture_filename)
-    output_size = (700, 700)
-    resized_picture = Image.open(form_picture)
-    resized_picture.thumbnail(output_size)
-    resized_picture.save(picture_path)
-    return picture_filename
 
 @app.route('/shopmanagement', methods=['GET', 'POST'])
 @login_required
