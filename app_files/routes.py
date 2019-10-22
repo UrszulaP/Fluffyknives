@@ -75,19 +75,19 @@ def save_user_picture(form_picture):
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    if current_user.isAdmin:
+    if current_user.is_admin:
         return redirect(url_for('root'))
 
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_user_picture(form.picture.data)
-            if current_user.imageFile != 'defaultpp.jpg':
+            if current_user.image_file != 'defaultpp.jpg':
                 old_picture_path = os.path.join(app.root_path, 
                                               'static/images/profile_pictures', 
-                                              current_user.imageFile)
+                                              current_user.image_file)
                 os.remove(old_picture_path)
-            current_user.imageFile = picture_file
+            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.adress = form.adress.data
@@ -102,23 +102,23 @@ def account():
         form.phone.data = current_user.phone
 
     image_file = url_for('static', filename='images/profile_pictures/' 
-                        + current_user.imageFile)
+                        + current_user.image_file)
     return render_template('account.html', form=form, image_file=image_file)
 
 
 @app.route('/cart', methods=['GET', 'POST'])
 @login_required
 def cart():
-    if current_user.isAdmin:
+    if current_user.is_admin:
         return redirect(url_for('root'))
     if request.method == 'POST':  # if posted form from main.html
-        orderedItemID = int(request.form['orderedItemID'])                      # orderedItemID !!!
-        order = Order(itemID=orderedItemID, userID=current_user.id)
+        ordered_item_ID = int(request.form['ordered_item_ID'])
+        order = Order(item_ID=ordered_item_ID, user_ID=current_user.id)
         db.session.add(order)
         db.session.commit()
     user_orders_list = (db.session.query(Order, Item)
-                      .filter(Order.userID==current_user.id)
-                      .join(Item, Order.itemID==Item.id))
+                      .filter(Order.user_ID==current_user.id)
+                      .join(Item, Order.item_ID==Item.id))
     return render_template('cart.html', user_orders_list=user_orders_list)
 
 
@@ -138,32 +138,32 @@ def save_item_picture(form_picture):
 @app.route('/shopmanagement', methods=['GET', 'POST'])
 @login_required
 def shopmanagement():
-    if current_user.isAdmin:
+    if current_user.is_admin:
         # try - because there are 2 forms in one template
         try:
             # deletes item from the database by form from itmes table
-            deletedItemID = int(request.form['deletedItemID'])                  # !!!
-            deletedItem = Item.query.filter_by(id=deletedItemID).first()        # !!!
+            deleted_item_ID = int(request.form['deleted_item_ID'])
+            deleted_item = Item.query.filter_by(id=deleted_item_ID).first()
             picture_path = os.path.join(app.root_path, 'static/images/shop', 
-                                       deletedItem.itemImage)
+                                       deleted_item.item_image)
             os.remove(picture_path)
-            db.session.delete(deletedItem)
+            db.session.delete(deleted_item)
             db.session.commit()
             return redirect(url_for('shopmanagement'))
         except:
             # adds a new item
             form = NewItemForm()
             if form.validate_on_submit():
-                new_item_image = save_item_picture(form.itemImage.data)
-                item = Item(itemName=form.itemName.data, 
-                            itemMainDescription=(form
-                                                 .itemMainDescription
+                new_item_image = save_item_picture(form.item_image.data)
+                item = Item(item_name=form.item_name.data, 
+                            item_main_description=(form
+                                                 .item_main_description
                                                  .data), 
-                            itemPointsDescription=(form
-                                                   .itemPointsDescription
+                            item_points_description=(form
+                                                   .item_points_description
                                                    .data), 
-                            itemImage=new_item_image, 
-                            itemPrice=form.itemPrice.data)
+                            item_image=new_item_image, 
+                            item_price=form.item_price.data)
                 db.session.add(item)
                 db.session.commit()
                 return redirect(url_for('shopmanagement'))
@@ -177,16 +177,16 @@ def shopmanagement():
 @app.route('/orders', methods=['GET', 'POST'])
 @login_required
 def orders():
-    if current_user.isAdmin:
+    if current_user.is_admin:
         form = OrderStatusForm()
         if form.validate_on_submit():
-            orderID = form.orderID.data                                         # !!!
-            order = db.session.query(Order).filter(Order.id==orderID).first()
+            order_ID = form.order_ID.data
+            order = db.session.query(Order).filter(Order.id==order_ID).first()
             order.status = form.status.data
             db.session.commit()
         orders_list = (db.session.query(Order, Item, User)
-                      .join(Item, Order.itemID==Item.id)
-                      .join(User, Order.userID==User.id).all())
+                      .join(Item, Order.item_ID==Item.id)
+                      .join(User, Order.user_ID==User.id).all())
         return render_template('orders.html', 
                                orders_list=orders_list, form=form)
     else:

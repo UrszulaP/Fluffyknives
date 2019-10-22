@@ -17,7 +17,7 @@ class RegistrationForm(FlaskForm):
                         Email("Nieprawidłowy adres e-mail")])
     password = PasswordField('Hasło', 
                              validators=[DataRequired("Pole wymagane")])
-    confirmPassword = PasswordField('Potwierdź hasło', 
+    confirm_password = PasswordField('Potwierdź hasło', 
                                     validators=[DataRequired("Pole wymagane"), 
                                     EqualTo('password', message="Hasła \
                                             nie zgadzają się")])
@@ -86,41 +86,41 @@ class OrderStatusForm(FlaskForm):
                                   'W trakcie realizacji'), 
                         ('Wysłano', "Wysłano"), 
                         ('Dostarczono', 'Dostarczono')])
-    orderID = StringField('Nr zamówienia')
+    order_ID = StringField('Nr zamówienia')
     submit = SubmitField('Zaktualizuj')
 
 
 class NewItemForm(FlaskForm):
-    itemName = StringField('Nazwa', 
+    item_name = StringField('Nazwa', 
                            validators=[DataRequired("Pole wymagane"), 
                            Length(min=2, max=30, 
                                   message="Nazwa powinna zawierać od %(min)d \
                                   do %(max)d znaków")])
-    itemMainDescription = TextAreaField('Opis główny', 
+    item_main_description = TextAreaField('Opis główny', 
                                         validators=[Length(max=200, 
                                                            message="Opis \
                                                            powinien zawierać \
                                                            do %(max)d \
                                                            znaków")])
-    itemPointsDescription = TextAreaField('Opis dodatkowy', 
+    item_points_description = TextAreaField('Opis dodatkowy', 
                                           validators=[Length(max=300, 
                                                              message="Opis \
                                                              powinien \
                                                              zawierać do \
                                                              %(max)d znaków")])
-    itemImage = FileField('Obraz', 
+    item_image = FileField('Obraz', 
                           validators=[DataRequired("Pole wymagane"), 
                           FileAllowed(['jpg', 'png'], 
                                       "Dozwolony format pliku to .jpg lub \
                                       .png")])
-    itemPrice = FloatField('Cena', 
+    item_price = FloatField('Cena', 
                            validators=[DataRequired("Pole wymagane. \
                                                     Dozwolone formaty ceny: \
                                                     100 / 100.00")])
     submit = SubmitField('Dodaj')
 
-    def validate_itemName(self, itemName):
-        item = Item.query.filter_by(itemName=itemName.data).first()
+    def validate_item_name(self, item_name):
+        item = Item.query.filter_by(item_name=item_name.data).first()
         if item:
             raise ValidationError("Przedmiot o podanej nazwie już istnieje")
 

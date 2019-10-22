@@ -32,15 +32,15 @@
 				<tr>
 					<td class="align-middle">{{ i.id }}</td>
 					<td class="align-middle"><img class="img-fluid Img125 img-responsive" 
-			src="{{url_for('static', filename='images/shop/'+ i.itemImage)}}" 
+			src="{{url_for('static', filename='images/shop/'+ i.item_image)}}" 
 			alt="Item image"></td>
-					<td class="align-middle text-nowrap">{{ i.itemName }}</td>
-					<td class="align-middle">{{ i.itemMainDescription }}</td>
-					<td class="align-middle text-nowrap">{{ i.itemPointsDescription | safe }}</td>
-					<td class="align-middle">{{ i.itemPrice }}</td>
+					<td class="align-middle text-nowrap">{{ i.item_name }}</td>
+					<td class="align-middle">{{ i.item_main_description }}</td>
+					<td class="align-middle text-nowrap">{{ i.item_points_description | safe }}</td>
+					<td class="align-middle">{{ i.item_price }}</td>
 					<td class="align-middle">
 						<form action = "/shopmanagement" method = "POST">
-							<button class="btn btn-outline-light" name="deletedItemID" value="{{ i.id }}">Usuń</button>
+							<button class="btn btn-outline-light" name="deleted_item_ID" value="{{ i.id }}">Usuń</button>
 						</form>
 					</td>
 				</tr>
@@ -56,78 +56,76 @@
 
 	<div class="row justify-content-center">
 		<div class="col-lg-6 col-md-9 col-sm-12">
-			<!-- enctype - needs to be defined to make files upload possible -->
 			<form action = "/shopmanagement" method = "POST" enctype="multipart/form-data">
-				{{ form.hidden_tag() }} <!-- protection against attacks -->
+				{{ form.hidden_tag() }}
 				
 				<div class="form-group">
-					{{ form.itemName.label(class="form-control-label") }}
-					{% if form.itemName.errors %}
-						{{ form.itemName(class="form-control is-invalid") }}
+					{{ form.item_name.label(class="form-control-label") }}
+					{% if form.item_name.errors %}
+						{{ form.item_name(class="form-control is-invalid") }}
 						<div class="invalid-feedback">
-							{% for error in form.itemName.errors %}
+							{% for error in form.item_name.errors %}
 							<span>{{ error }}</span>
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.itemName(class="form-control") }}
+						{{ form.item_name(class="form-control") }}
 					{% endif %}
 				</div>
 
 				<div class="form-group">
-					{{ form.itemMainDescription.label(class="form-control-label") }}
-					{% if form.itemMainDescription.errors %}
-						{{ form.itemMainDescription(class="form-control is-invalid") }}
+					{{ form.item_main_description.label(class="form-control-label") }}
+					{% if form.item_main_description.errors %}
+						{{ form.item_main_description(class="form-control is-invalid") }}
 						<div class="invalid-feedback">
-							{% for error in form.itemMainDescription.errors %}
+							{% for error in form.item_main_description.errors %}
 							<span>{{ error }}</span>
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.itemMainDescription(class="form-control", rows='3') }}
+						{{ form.item_main_description(class="form-control", rows='3') }}
 					{% endif %}
 				</div>
 
 				<!-- CKEditor (text editor) implementation - id="editor" -->
-				{{ form.itemPointsDescription.label(class="form-control-label") }} <!--taken outside the div with "Blacktext" class-->
+				{{ form.item_points_description.label(class="form-control-label") }} <!--taken outside the div with "Blacktext" class-->
 				<div class="form-group Blacktext">
-					{% if form.itemPointsDescription.errors %}
-						{{ form.itemPointsDescription(class="form-control is-invalid", id="editor") }}
+					{% if form.item_points_description.errors %}
+						{{ form.item_points_description(class="form-control is-invalid", id="editor") }}
 						<div class="invalid-feedback">
-							{% for error in form.itemPointsDescription.errors %}
+							{% for error in form.item_points_description.errors %}
 							<span>{{ error }}</span>
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.itemPointsDescription(class="form-control", id="editor") }}
+						{{ form.item_points_description(class="form-control", id="editor") }}
 					{% endif %}
 				</div>
 
 				<div class="form-group">
-					{{ form.itemImage.label() }}
-					<div> <!-- div for good layout on smaller screens -->
-					{{ form.itemImage() }}
+					{{ form.item_image.label() }}
+					<div>
+					{{ form.item_image() }}
 					</div>
 					<!-- different way of throwing errors to file field -->
-					{% if form.itemImage.errors %}
-					{% for error in form.itemImage.errors %}
+					{% if form.item_image.errors %}
+					{% for error in form.item_image.errors %}
 						<p class="text-danger text-xs">{{ error }}</p>
 					{% endfor %}
 					{% endif %}
 				</div>
 
 				<div class="form-group">
-					<!-- enctype - needs to be defined to make files upload possible -->
-					{{ form.itemPrice.label(class="form-control-label") }}
-					{% if form.itemPrice.errors %}
-						{{ form.itemPrice(class="form-control is-invalid") }}
+					{{ form.item_price.label(class="form-control-label") }}
+					{% if form.item_price.errors %}
+						{{ form.item_price(class="form-control is-invalid") }}
 						<div class="invalid-feedback">
-							{% for error in form.itemPrice.errors %}
+							{% for error in form.item_price.errors %}
 							<span>{{ error }}</span>
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.itemPrice(class="form-control") }}
+						{{ form.item_price(class="form-control") }}
 					{% endif %}
 				</div>
 				

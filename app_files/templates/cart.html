@@ -47,11 +47,11 @@
 				<tr class="text-nowrap">
 					<td class="align-middle">{{ i[0].id }}</td>
 					<td><img class="img-fluid Img125 img-responsive" 
-					src="{{url_for('static', filename='images/shop/'+ i[1].itemImage)}}" 
+					src="{{url_for('static', filename='images/shop/'+ i[1].item_image)}}" 
 					alt="Item image"></td>
-					<td class="align-middle">{{ i[0].itemID }}</td>
-					<td class="align-middle">{{ i[1].itemName }}</td>
-					<td class="align-middle">{{ i[1].itemPrice }}</td>
+					<td class="align-middle">{{ i[0].item_ID }}</td>
+					<td class="align-middle">{{ i[1].item_name }}</td>
+					<td class="align-middle">{{ i[1].item_price }}</td>
 					<td class="align-middle">{{ i[0].status }}</td>
 				</tr>
 				{% endfor %}

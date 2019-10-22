@@ -69,22 +69,21 @@
 		</div>
 
 		<!-- Items cards -->
-		<!-- Items data retrieved from the database -->
 		<div class="row">
 			{% for i in items_list %}
 				<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 					<div class="card border-dark text-dark mb-3 mt-3">
 						<img class="card-img-top img-fluid" 
-						src="{{url_for('static', filename='images/shop/'+ i.itemImage)}}" 
+						src="{{url_for('static', filename='images/shop/'+ i.item_image)}}" 
 						alt="Card image cap">
 						<div class="card-body">
-							<h5 class="card-title text-center">{{ i.itemName }}</h5>
-							<p class="card-text text-center">{{ i.itemMainDescription }}</p>
-							{{ i.itemPointsDescription | safe}}
-							<p class="card-text text-center">Cena: {{ "%.2f" % i.itemPrice }} zł</p> <!--or "{:.2f}".format(i.itemPrice)-->
+							<h5 class="card-title text-center">{{ i.item_name }}</h5>
+							<p class="card-text text-center">{{ i.item_main_description }}</p>
+							{{ i.item_points_description | safe}}
+							<p class="card-text text-center">Cena: {{ "%.2f" % i.item_price }} zł</p>
 							<form action = "/cart" method = "POST">
 								<div class="text-center">
-									<button class="btn btn-outline-dark" name="orderedItemID" value="{{ i.id }}">Zamów</button>
+									<button class="btn btn-outline-dark" name="ordered_item_ID" value="{{ i.id }}">Zamów</button>
 								</div>
 							</form>          
 						</div>
