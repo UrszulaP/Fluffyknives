@@ -1,6 +1,7 @@
 from flask import redirect, url_for, render_template, request
 from app_files import app, db, bcrypt
-from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderStatusForm, NewItemForm
+from app_files.forms import RegistrationForm, LoginForm, UpdateAccountForm, \
+OrderStatusForm, NewItemForm
 from app_files.db_models import User, Item, Order
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets

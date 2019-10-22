@@ -1,19 +1,26 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, FloatField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, \
+                    RadioField, FloatField, TextAreaField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, \
+ValidationError
 from app_files.db_models import User, Item
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Nazwa użytkownika', validators=[DataRequired("Pole wymagane"), 
-                           Length(min=2, max=20, message="Nazwa powinna zawierać od %(min)d do %(max)d znaków")])
-    email = StringField('Email', validators=[DataRequired("Pole wymagane"), 
+    username = StringField('Nazwa użytkownika', 
+                           validators=[DataRequired("Pole wymagane"), 
+                           Length(min=2, max=20, message="Nazwa powinna \
+                            zawierać od %(min)d do %(max)d znaków")])
+    email = StringField('Email', 
+                        validators=[DataRequired("Pole wymagane"), 
                         Email("Nieprawidłowy adres e-mail")])
-    password = PasswordField('Hasło', validators=[DataRequired("Pole wymagane")])
+    password = PasswordField('Hasło', 
+                             validators=[DataRequired("Pole wymagane")])
     confirmPassword = PasswordField('Potwierdź hasło', 
                                     validators=[DataRequired("Pole wymagane"), 
-                                    EqualTo('password', message="Hasła nie zgadzają się")])
+                                    EqualTo('password', message="Hasła \
+                                            nie zgadzają się")])
     submit = SubmitField('Utwórz konto')
 
     def validate_username(self, username):
@@ -24,7 +31,8 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         email = User.query.filter_by(email=email.data).first()
         if email:
-            raise ValidationError("Konto z podanym adresem e-mail już istnieje")
+            raise ValidationError("Konto z podanym adresem e-mail już \
+                                  istnieje")
 
 
 class LoginForm(FlaskForm):
@@ -39,16 +47,23 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField('Nazwa użytkownika', 
                            validators=[DataRequired("Pole wymagane"), 
-                           Length(min=2, max=20, message="Nazwa powinna zawierać od %(min)d do %(max)d znaków")])
+                           Length(min=2, max=20, message="Nazwa powinna \
+                                  zawierać od %(min)d do %(max)d znaków")])
     email = StringField('Email',
                         validators=[DataRequired("Pole wymagane"), 
                         Email("Nieprawidłowy adres e-mail")])
     picture = FileField('Zaktualizuj zdjęcie profilowe', 
-                        validators=[FileAllowed(['jpg', 'png'], "Dozwolony format pliku to .jpg lub .png")])
+                        validators=[FileAllowed(['jpg', 'png'], 
+                                                "Dozwolony format pliku to \
+                                                .jpg lub .png")])
     adress = StringField('Adres do wysyłki', 
-                        validators=[Length(max=200, message="Adres powinien zawierać od %(min)d do %(max)d znaków")])
+                        validators=[Length(max=200, 
+                                           message="Adres powinien zawierać \
+                                           od %(min)d do %(max)d znaków")])
     phone = StringField('Numer telefonu', 
-                        validators=[Length(max=20, message="Numer powinien zawierać od %(min)d do %(max)d znaków")])
+                        validators=[Length(max=20, 
+                                           message="Numer powinien zawierać \
+                                           od %(min)d do %(max)d znaków")])
     submit = SubmitField('Zaktualizuj')
 
     def validate_username(self, username):
@@ -61,12 +76,16 @@ class UpdateAccountForm(FlaskForm):
         if email.data != current_user.email:
             email = User.query.filter_by(email=email.data).first()
             if email:
-                raise ValidationError("Konto z podanym adresem e-mail już istnieje")
+                raise ValidationError("Konto z podanym adresem e-mail już \
+                                      istnieje")
 
 
 class OrderStatusForm(FlaskForm):
-    status = RadioField('Aktualizuj status', choices=[('W trakcie realizacji', 'W trakcie realizacji'), 
-                        ('Wysłano', "Wysłano"), ('Dostarczono', 'Dostarczono')])
+    status = RadioField('Aktualizuj status', 
+                        choices=[('W trakcie realizacji', 
+                                  'W trakcie realizacji'), 
+                        ('Wysłano', "Wysłano"), 
+                        ('Dostarczono', 'Dostarczono')])
     orderID = StringField('Nr zamówienia')
     submit = SubmitField('Zaktualizuj')
 
@@ -74,16 +93,30 @@ class OrderStatusForm(FlaskForm):
 class NewItemForm(FlaskForm):
     itemName = StringField('Nazwa', 
                            validators=[DataRequired("Pole wymagane"), 
-                           Length(min=2, max=30, message="Nazwa powinna zawierać od %(min)d do %(max)d znaków")])
+                           Length(min=2, max=30, 
+                                  message="Nazwa powinna zawierać od %(min)d \
+                                  do %(max)d znaków")])
     itemMainDescription = TextAreaField('Opis główny', 
-                                        validators=[Length(max=200, message="Opis powinien zawierać do %(max)d znaków")])
+                                        validators=[Length(max=200, 
+                                                           message="Opis \
+                                                           powinien zawierać \
+                                                           do %(max)d \
+                                                           znaków")])
     itemPointsDescription = TextAreaField('Opis dodatkowy', 
-                                          validators=[Length(max=300, message="Opis powinien zawierać do %(max)d znaków")])
+                                          validators=[Length(max=300, 
+                                                             message="Opis \
+                                                             powinien \
+                                                             zawierać do \
+                                                             %(max)d znaków")])
     itemImage = FileField('Obraz', 
                           validators=[DataRequired("Pole wymagane"), 
-                          FileAllowed(['jpg', 'png'], "Dozwolony format pliku to .jpg lub .png")])
+                          FileAllowed(['jpg', 'png'], 
+                                      "Dozwolony format pliku to .jpg lub \
+                                      .png")])
     itemPrice = FloatField('Cena', 
-                           validators=[DataRequired("Pole wymagane. Dozwolone formaty ceny: 100 / 100.00")])
+                           validators=[DataRequired("Pole wymagane. \
+                                                    Dozwolone formaty ceny: \
+                                                    100 / 100.00")])
     submit = SubmitField('Dodaj')
 
     def validate_itemName(self, itemName):
