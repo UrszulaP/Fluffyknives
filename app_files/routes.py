@@ -26,7 +26,10 @@ def login():
                                                 form.password.data)):
             login_user(user, remember=form.remember.data)
             nextPage = request.args.get('next')
-            return redirect(nextPage) if nextPage else redirect(url_for('root')) # !!!!!!!!!!!!!!!!!!!!!!!!
+            if nextPage:
+                return redirect(nextPage)
+            else: 
+                return redirect(url_for('root'))
         else:
             return render_template('login_failed.html')
     return render_template('login.html', form=form)
@@ -45,7 +48,8 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashedPassword = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        hashedPassword = (bcrypt.generate_password_hash(form.password.data)
+                          .decode('utf-8'))
         user = User(username=form.username.data, 
                     email=form.email.data, 
                     password=hashedPassword)
@@ -107,13 +111,14 @@ def account():
 def cart():
     if current_user.isAdmin:
         return redirect(url_for('root'))
-    # if posted form from main.html
-    if request.method == 'POST':
+    if request.method == 'POST':  # if posted form from main.html
         orderedItemID = int(request.form['orderedItemID'])
         order = Order(itemID=orderedItemID, userID=current_user.id)
         db.session.add(order)
         db.session.commit()
-    userOrdersList = db.session.query(Order, Item).filter(Order.userID==current_user.id).join(Item, Order.itemID==Item.id)
+    userOrdersList = (db.session.query(Order, Item)
+                      .filter(Order.userID==current_user.id)
+                      .join(Item, Order.itemID==Item.id))
     return render_template('cart.html', userOrdersList=userOrdersList)
 
 
@@ -148,23 +153,24 @@ def shopmanagement():
             return redirect(url_for('shopmanagement'))
         except:
             # adds a new item
-            # it may be in except, form will always be loaded
-            # name different from 'form' must be used, 
-            # because 'form' is already used in template to delete items         ??????????????????
-            formNewItem = NewItemForm()
-            if formNewItem.validate_on_submit():
-                newItemImage = saveItemPicture(formNewItem.itemImage.data)
-                item = Item(itemName=formNewItem.itemName.data, 
-                            itemMainDescription=formNewItem.itemMainDescription.data, 
-                            itemPointsDescription=formNewItem.itemPointsDescription.data, 
+            form = NewItemForm()
+            if form.validate_on_submit():
+                newItemImage = saveItemPicture(form.itemImage.data)
+                item = Item(itemName=form.itemName.data, 
+                            itemMainDescription=(form
+                                                 .itemMainDescription
+                                                 .data), 
+                            itemPointsDescription=(form
+                                                   .itemPointsDescription
+                                                   .data), 
                             itemImage=newItemImage, 
-                            itemPrice=formNewItem.itemPrice.data)
+                            itemPrice=form.itemPrice.data)
                 db.session.add(item)
                 db.session.commit()
                 return redirect(url_for('shopmanagement'))
         itemsList = Item.query.all()
         return render_template('shopmanagement.html', 
-                               itemsList=itemsList, form=formNewItem)
+                               itemsList=itemsList, form=form)
     else:
         return redirect(url_for('root'))
 
@@ -179,7 +185,9 @@ def orders():
             order = db.session.query(Order).filter(Order.id==orderID).first()
             order.status = form.status.data
             db.session.commit()
-        ordersList = db.session.query(Order, Item, User).join(Item, Order.itemID==Item.id).join(User, Order.userID==User.id).all()
+        ordersList = (db.session.query(Order, Item, User)
+                      .join(Item, Order.itemID==Item.id)
+                      .join(User, Order.userID==User.id).all())
         return render_template('orders.html', 
                                ordersList=ordersList, form=form)
     else:
