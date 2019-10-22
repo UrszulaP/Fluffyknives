@@ -55,14 +55,12 @@ All of the content comes from our knives crafting work.
 
 All of the photos and the video are my job.
 
-The app was partly based on Flask tutorial: https://www.youtube.com/watch?v=MwZwr5Tvyxo
-
-JS for navbar was taken from https://startbootstrap.com/ , JS for smooth scrolling was taken from https://css-tricks.com/snippets/jquery/smooth-scrolling/
-
-All other sources of knowledge are:
+Sources of knowledge:
+* Tutorial: https://www.youtube.com/watch?v=MwZwr5Tvyxo
 * Python, Bootstrap, Flask framework and libraries documentations
 * "Python Level Up" course organised by Daftcode.
 * https://stackoverflow.com/
+* JS taken from https://startbootstrap.com/ and https://css-tricks.com/snippets/jquery/smooth-scrolling/
 
 ## Contact
 App created by Urszula Poliszuk.
