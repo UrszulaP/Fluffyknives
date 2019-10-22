@@ -10,8 +10,8 @@ from PIL import Image
 
 @app.route('/')
 def root():
-    itemsList = Item.query.all()
-    return render_template('main.html', itemsList=itemsList)
+    items_list = Item.query.all()
+    return render_template('main.html', items_list=items_list)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -25,9 +25,9 @@ def login():
         if (user and bcrypt.check_password_hash(user.password, 
                                                 form.password.data)):
             login_user(user, remember=form.remember.data)
-            nextPage = request.args.get('next')
-            if nextPage:
-                return redirect(nextPage)
+            next_page = request.args.get('next')
+            if next_page:
+                return redirect(next_page)
             else: 
                 return redirect(url_for('root'))
         else:
@@ -48,29 +48,29 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashedPassword = (bcrypt.generate_password_hash(form.password.data)
+        hashed_password = (bcrypt.generate_password_hash(form.password.data)
                           .decode('utf-8'))
         user = User(username=form.username.data, 
                     email=form.email.data, 
-                    password=hashedPassword)
+                    password=hashed_password)
         db.session.add(user)
         db.session.commit()
         return render_template('register_ok.html')
     return render_template('register.html', form=form)
 
 
-def saveUserPicture(formPicture):
-    randomHex = secrets.token_hex(8)
-    fileName, fileExtension = os.path.splitext(formPicture.filename)
-    pictureFilename = randomHex + fileExtension
-    picturePath = os.path.join(app.root_path, 
+def save_user_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    file_name, file_extension = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_extension
+    picture_path = os.path.join(app.root_path, 
                                'static/images/profile_pictures', 
-                               pictureFilename)
-    outputSize = (125, 125)
-    resizedPicture = Image.open(formPicture)
-    resizedPicture.thumbnail(outputSize)
-    resizedPicture.save(picturePath)
-    return pictureFilename
+                               picture_filename)
+    output_size = (125, 125)
+    resized_picture = Image.open(form_picture)
+    resized_picture.thumbnail(output_size)
+    resized_picture.save(picture_path)
+    return picture_filename
 
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
@@ -81,13 +81,13 @@ def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
-            pictureFile = saveUserPicture(form.picture.data)
+            picture_file = save_user_picture(form.picture.data)
             if current_user.imageFile != 'defaultpp.jpg':
-                oldPicturePath = os.path.join(app.root_path, 
+                old_picture_path = os.path.join(app.root_path, 
                                               'static/images/profile_pictures', 
                                               current_user.imageFile)
-                os.remove(oldPicturePath)
-            current_user.imageFile = pictureFile
+                os.remove(old_picture_path)
+            current_user.imageFile = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.adress = form.adress.data
@@ -101,9 +101,9 @@ def account():
         form.adress.data = current_user.adress
         form.phone.data = current_user.phone
 
-    imageFile = url_for('static', filename='images/profile_pictures/' 
+    image_file = url_for('static', filename='images/profile_pictures/' 
                         + current_user.imageFile)
-    return render_template('account.html', form=form, imageFile=imageFile)
+    return render_template('account.html', form=form, image_file=image_file)
 
 
 @app.route('/cart', methods=['GET', 'POST'])
@@ -112,42 +112,41 @@ def cart():
     if current_user.isAdmin:
         return redirect(url_for('root'))
     if request.method == 'POST':  # if posted form from main.html
-        orderedItemID = int(request.form['orderedItemID'])
+        orderedItemID = int(request.form['orderedItemID'])                      # orderedItemID !!!
         order = Order(itemID=orderedItemID, userID=current_user.id)
         db.session.add(order)
         db.session.commit()
-    userOrdersList = (db.session.query(Order, Item)
+    user_orders_list = (db.session.query(Order, Item)
                       .filter(Order.userID==current_user.id)
                       .join(Item, Order.itemID==Item.id))
-    return render_template('cart.html', userOrdersList=userOrdersList)
+    return render_template('cart.html', user_orders_list=user_orders_list)
 
 
-def saveItemPicture(formPicture):
-    randomHex = secrets.token_hex(8)
-    fileName, fileExtension = os.path.splitext(formPicture.filename)
-    pictureFilename = randomHex + fileExtension
-    picturePath = os.path.join(app.root_path, 
+def save_item_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    file_name, file_extension = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_extension
+    picture_path = os.path.join(app.root_path, 
                                'static/images/shop', 
-                               pictureFilename)
-    outputSize = (700, 700)
-    resizedPicture = Image.open(formPicture)
-    resizedPicture.thumbnail(outputSize)
-    resizedPicture.save(picturePath)
-    return pictureFilename
+                               picture_filename)
+    output_size = (700, 700)
+    resized_picture = Image.open(form_picture)
+    resized_picture.thumbnail(output_size)
+    resized_picture.save(picture_path)
+    return picture_filename
 
 @app.route('/shopmanagement', methods=['GET', 'POST'])
 @login_required
 def shopmanagement():
     if current_user.isAdmin:
-        # try - because there are 2 forms in template, 
-        # handles an error while adding an item
+        # try - because there are 2 forms in one template
         try:
             # deletes item from the database by form from itmes table
-            deletedItemID = int(request.form['deletedItemID'])
-            deletedItem = Item.query.filter_by(id=deletedItemID).first()
-            picturePath = os.path.join(app.root_path, 'static/images/shop', 
+            deletedItemID = int(request.form['deletedItemID'])                  # !!!
+            deletedItem = Item.query.filter_by(id=deletedItemID).first()        # !!!
+            picture_path = os.path.join(app.root_path, 'static/images/shop', 
                                        deletedItem.itemImage)
-            os.remove(picturePath)
+            os.remove(picture_path)
             db.session.delete(deletedItem)
             db.session.commit()
             return redirect(url_for('shopmanagement'))
@@ -155,7 +154,7 @@ def shopmanagement():
             # adds a new item
             form = NewItemForm()
             if form.validate_on_submit():
-                newItemImage = saveItemPicture(form.itemImage.data)
+                new_item_image = save_item_picture(form.itemImage.data)
                 item = Item(itemName=form.itemName.data, 
                             itemMainDescription=(form
                                                  .itemMainDescription
@@ -163,14 +162,14 @@ def shopmanagement():
                             itemPointsDescription=(form
                                                    .itemPointsDescription
                                                    .data), 
-                            itemImage=newItemImage, 
+                            itemImage=new_item_image, 
                             itemPrice=form.itemPrice.data)
                 db.session.add(item)
                 db.session.commit()
                 return redirect(url_for('shopmanagement'))
-        itemsList = Item.query.all()
+        items_list = Item.query.all()
         return render_template('shopmanagement.html', 
-                               itemsList=itemsList, form=form)
+                               items_list=items_list, form=form)
     else:
         return redirect(url_for('root'))
 
@@ -181,14 +180,14 @@ def orders():
     if current_user.isAdmin:
         form = OrderStatusForm()
         if form.validate_on_submit():
-            orderID = form.orderID.data
+            orderID = form.orderID.data                                         # !!!
             order = db.session.query(Order).filter(Order.id==orderID).first()
             order.status = form.status.data
             db.session.commit()
-        ordersList = (db.session.query(Order, Item, User)
+        orders_list = (db.session.query(Order, Item, User)
                       .join(Item, Order.itemID==Item.id)
                       .join(User, Order.userID==User.id).all())
         return render_template('orders.html', 
-                               ordersList=ordersList, form=form)
+                               orders_list=orders_list, form=form)
     else:
         return redirect(url_for('root'))
