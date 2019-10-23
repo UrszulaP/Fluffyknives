@@ -52,8 +52,25 @@
 
 								<!-- Radio buttons with options to choose -->
 								<div class="form-check">
-									{{ form.status.label(class="form-control-label") }}
-									{{ form.status(class="form-check-label")}}
+									  <label class="form-control-label">
+										<input type="radio" class="form-check-label" name="status" value="W trakcie realizacji"
+										{%if i[0].status == 'W trakcie realizacji'%}checked{%endif%}>
+										W trakcie realizacji
+									  </label>
+									  <br>
+
+									  <label class="form-control-label">
+										<input type="radio" class="form-check-label" name="status" value="Wysłano"
+										{%if i[0].status == 'Wysłano'%}checked{%endif%}>
+										Wysłano
+									  </label>
+									  <br>
+
+									  <label class="form-control-label">
+										<input type="radio" class="form-check-label" name="status" value="Dostarczono"
+										{%if i[0].status == 'Dostarczono'%}checked{%endif%}>
+										Dostarczono
+									  </label>                        
 								</div>
 
 								<!-- Hidden field with inserted order_ID (value taken from the for loop), to find out which order it refers -->
