@@ -38,7 +38,7 @@ Admin account:
 * Orders page with all users' orders info
 * Changing orders' statuses
 
-Admin login credentials:
+Admin login credentials for testing purposes:
 
 login: admin@admin.admin
 
