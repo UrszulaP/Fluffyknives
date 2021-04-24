@@ -2,7 +2,7 @@
 
 
 {% block navbarposition %}
-<nav class="navbar navbar-expand-md navbar-dark fixed-top Bggrey" id="navbarMain">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top Bggrey" id="navbarMain">
 {% endblock %}
 
 
@@ -63,9 +63,10 @@
 	<div id="shop">
 		<div class="text-center">
 			<h1 class="text-light Sekcja">SKLEP</h1>
-			<p>Aktualnie posiadamy poniższe egzemplarze noży na sprzedaż. Każdy z nich został wykonany ręcznie w naszej pracowni.<br/> Istnieje możliwość zamówienia skórzanego pokrowca, szytego na miarę.</p>
-			<p>Zamównienia można składać mailowo (zakładka "Kontakt") lub on-line. W tym celu należy założyć konto na naszej stronie.</p>
-			<small class="text-muted">Niniejsza strona internetowa została stworzona wyłącznie w celach edukacyjnych i jej zawartość nie stanowi oferty handlowej w rozumieniu art. 66 §1 Kodeksu Cywilnego.</small>
+			<p>Aktualnie posiadamy poniższe egzemplarze noży na sprzedaż. Każdy z nich został wykonany ręcznie w naszej pracowni.<br/>
+                Istnieje możliwość zamówienia skórzanego pokrowca, szytego na miarę.
+            </p>
+			<p>Zamówienia można składać mailowo (zakładka "Kontakt") lub on-line. W tym celu należy założyć konto na naszej stronie.</p>
 		</div>
 
 		<!-- Items cards -->
@@ -73,8 +74,8 @@
 			{% for i in items_list %}
 				<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 					<div class="card border-dark text-dark mb-3 mt-3">
-						<img class="card-img-top img-fluid" 
-						src="{{url_for('static', filename='images/shop/'+ i.item_image)}}" 
+						<img class="card-img-top img-fluid"
+						src="{{url_for('static', filename='images/shop/'+ i.item_image)}}"
 						alt="Card image cap">
 						<div class="card-body">
 							<h5 class="card-title text-center">{{ i.item_name }}</h5>
@@ -85,17 +86,15 @@
 								<div class="text-center">
 									<button class="btn btn-outline-dark" name="ordered_item_id" value="{{ i.id }}">Zamów</button>
 								</div>
-							</form>          
+							</form>
 						</div>
 					</div>
 				</div>
-			{% endfor %} 
+			{% endfor %}
 		</div>
- 
 	</div>
 
-
-<!-- ------------------------------ ABOUT US ------------------------------ -->
+	<!-- ------------------------------ ABOUT US ------------------------------ -->
 
 	<div id="aboutus">
 		<h1 class="text-light text-center Sekcja">O NAS</h1>
@@ -115,28 +114,25 @@
 		</div>
 	</div>
 
-
-<!-- ------------------------------ CONTACT ------------------------------ -->
+	<!-- ------------------------------ CONTACT ------------------------------ -->
 
 	<div id="contact">
 		<h1 class="text-light text-center Sekcja">KONTAKT</h1>
-		<p class="text-center">Zamównienia oraz wszelkie pytania można kierować na poniższy numer telefonu lub adres mailowy.<br/><br/>
+		<p class="text-center">Zamówienia oraz wszelkie pytania można kierować na poniższy numer telefonu lub adres mailowy.<br/><br/>
 		Fluffy Knives Sp. z o.o.<br/>
 		zamowienia@fluffyknives.pl<br/>
-		+48 000 000 000</p>
+		+48 609 068 888</p>
 
 		<!-- Google Map -->
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
 				<div class="text-center embed-responsive embed-responsive-4by3">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13753.89329990438!2d-115.16572167293933!3d36.13886825909826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8c40cdc682b99%3A0x13e0487c787924f4!2sCircus+Circus+Las+Vegas!5e0!3m2!1spl!2spl!4v1529774392419" class="embed-responsive-item"></iframe>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.308612609991!2d20.959259187800175!3d52.26412473057166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecbbe6c087cb5%3A0x581185517ca1de8!2sPrzasnyska%2024%2C%2001-747%20Warszawa!5e0!3m2!1spl!2spl!4v1619283714101!5m2!1spl!2spl" class="embed-responsive-item"></iframe>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
-
 
 <!-- ------------------------------ FOOTER ------------------------------ -->
 
@@ -147,5 +143,3 @@
 </footer>
 
 {% endblock content %}
-
-
