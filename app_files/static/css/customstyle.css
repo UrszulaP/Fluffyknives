@@ -1,21 +1,16 @@
-/*-------------------- BACKGROUND STYLE ---------------------*/
-
 body {
 	background-image: url("../images/bgimage.jpg");
-
 	color: white;
 }
 
-/*------------------ CAROUSEL TEXT STYLES -------------------*/
+/* CAROUSEL STYLES */
 
 .c-toptext {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-
 	color: #fff;
 	text-align: center;
-
 	transform: translate(-50%, -50%);
 	z-index: 12;
 }
@@ -40,9 +35,7 @@ body {
 	background-color: rgba(255, 255, 255, 0.7);
 }
 
-/*SM MD*/
-
-@media (min-width: 576px) {
+@media (min-width: 576px) {  /* sm-md*/
 	.c-toptext .c-logo {
 		font-size: 80px;
 	}
@@ -56,12 +49,9 @@ body {
 	}
 }
 
-/*LG XL*/
-
-@media (min-width: 992px) {
+@media (min-width: 992px) {  /* lg-xl */
 	.c-toptext .c-logo {
 		padding-bottom: 30px;
-
 		font-size: 100px;
 	}
 
@@ -69,14 +59,6 @@ body {
 		font-size: 18px;
 	}
 }
-
-/*--------------- TRANSPARENT BACKGROUND STYLE --------------*/
-
-	.c-bg-light {
-		background-color: rgba(31, 29, 29, 0.3);
-	}
-
-/*------------------ CAROUSEL ITEMS STYLES ------------------*/
 
 .carousel-item {
 	height: 100vh;
@@ -87,15 +69,10 @@ body {
 {
 	width: 100%;
 	height: 100%;
-
 	object-fit: cover;
 }
 
-/*---------------------- NAVBAR STYLES ----------------------*/
-
-.c-bg-dark {
-	background-color: rgba(0, 0, 0, 0.8);
-}
+/* NAVBAR STYLES */
 
 #navbarMain .nav-link, #navbarMain .navbar-toggler {
 	color: #fff;
@@ -103,39 +80,38 @@ body {
 
 .nav-item:hover {
 	border-radius: 10px;
-
 	background-color: rgba(255, 255, 255, 0.2);
 }
 
-/*--------------------- ITEMS CARDS STYLE -------------------*/
+/* OTHER STYLES */
+
+.c-bg-light {
+	background-color: rgba(31, 29, 29, 0.3);
+}
+
+.c-bg-dark {
+	background-color: rgba(0, 0, 0, 0.8);
+}
 
 .card {
 	background-color: rgba(255, 255, 255, 0.85);
 }
 
-/*----------------------- TEXT STYLES -----------------------*/
-
 .c-header {
 	padding-top: 100px;
-
 	font-family: 'Markazi Text', serif;
 	font-size: 70px;
 }
 
 footer {
 	margin: 0;
-
 	background-color: rgba(0, 0, 0, 0.5);
 }
-
-/*---------------------- IMAGES STYLES ----------------------*/
 
 .c-size-125 {
 	max-height: 125px; 
 	max-width: 125px;
 }
-
-/*--------------- TEXT EDITOR BLACK TEXT STYLE --------------*/
 
 .c-text-black {
 	color: black;
