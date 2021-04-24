@@ -109,7 +109,7 @@ class OrderStatusForm(FlaskForm):
                   'W trakcie realizacji'),
                  ('Wysłano', "Wysłano"),
                  ('Dostarczono', 'Dostarczono')])
-    order_ID = StringField('Nr zamówienia')
+    order_id = StringField('Nr zamówienia')
     submit = SubmitField('Zaktualizuj')
 
 

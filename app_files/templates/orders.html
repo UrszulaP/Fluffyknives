@@ -32,7 +32,7 @@
 				<!-- i[0] - join Order, i[1] - join Item, i[2] - join User -->
 				<tr class="text-nowrap">
 					<td class="align-middle">{{ i[0].id }}</td>
-					<td class="align-middle">{{ i[0].item_ID }}</td>
+					<td class="align-middle">{{ i[0].item_id }}</td>
 					<td class="align-middle">{{ i[1].item_name }}</td>
 					<td class="align-middle">{{ i[1].item_price }}</td>
 					<td class="align-middle">{{ i[2].id }}</td>
@@ -56,9 +56,9 @@
 									{{ form.status(class="form-check-label")}}
 								</div>
 
-								<!-- Hidden field with inserted order_ID (value taken from the for loop), to find out which order it refers -->
+								<!-- Hidden field with inserted order_id (value taken from the for loop), to find out which order it refers -->
 								<div class="form-group d-none">
-									{{ form.order_ID(class="form-control", value=i[0].id) }}
+									{{ form.order_id(class="form-control", value=i[0].id) }}
 								</div>
 
 								<div class="form-group text-center">

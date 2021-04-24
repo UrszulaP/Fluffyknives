@@ -138,13 +138,13 @@ def cart():
     if current_user.is_admin:
         return redirect(url_for('root'))
     if request.method == 'POST':  # if posted form from main.html
-        ordered_item_ID = int(request.form['ordered_item_ID'])
-        order = Order(item_ID=ordered_item_ID, user_ID=current_user.id)
+        ordered_item_id = int(request.form['ordered_item_id'])
+        order = Order(item_id=ordered_item_id, user_id=current_user.id)
         db.session.add(order)
         db.session.commit()
     user_orders_list = (db.session.query(Order, Item)
-                        .filter(Order.user_ID == current_user.id)
-                        .join(Item, Order.item_ID == Item.id))
+                        .filter(Order.user_id == current_user.id)
+                        .join(Item, Order.item_id == Item.id))
     return render_template('cart.html', user_orders_list=user_orders_list)
 
 
@@ -155,8 +155,8 @@ def shopmanagement():
         # try - because there are 2 forms in one template
         try:
             # deletes item from the database by form from itmes table
-            deleted_item_ID = int(request.form['deleted_item_ID'])
-            deleted_item = Item.query.filter_by(id=deleted_item_ID).first()
+            deleted_item_id = int(request.form['deleted_item_id'])
+            deleted_item = Item.query.filter_by(id=deleted_item_id).first()
             picture_path = os.path.join(
                 app.root_path, 'static/images/shop',
                 deleted_item.item_image)
@@ -193,14 +193,14 @@ def orders():
     if current_user.is_admin:
         form = OrderStatusForm()
         if form.validate_on_submit():
-            order_ID = form.order_ID.data
+            order_id = form.order_id.data
             order = db.session.query(Order).filter(
-                Order.id == order_ID).first()
+                Order.id == order_id).first()
             order.status = form.status.data
             db.session.commit()
         orders_list = (db.session.query(Order, Item, User)
-                       .join(Item, Order.item_ID == Item.id)
-                       .join(User, Order.user_ID == User.id).all())
+                       .join(Item, Order.item_id == Item.id)
+                       .join(User, Order.user_id == User.id).all())
         return render_template(
             'orders.html',
             orders_list=orders_list,

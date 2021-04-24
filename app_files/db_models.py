@@ -39,11 +39,11 @@ class Item(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    item_ID = db.Column(db.ForeignKey('Item.id'))
-    user_ID = db.Column(db.ForeignKey('User.id'))
+    item_id = db.Column(db.ForeignKey('Item.id'))
+    user_id = db.Column(db.ForeignKey('User.id'))
     status = db.Column(db.String, nullable=False, default='W trakcie realizacji')
     item = db.relationship('Item', backref="user_associations")
     user = db.relationship('User', backref="item_associations")
 
     def __repr__(self):
-        return f"Order('{self.id}', {self.item_ID}', '{self.user_ID}')"
+        return f"Order('{self.id}', {self.item_id}', '{self.user_id}')"
