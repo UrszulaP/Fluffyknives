@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block navbarposition %}
-<nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
+<nav class="navbar navbar-expand-md navbar-dark c-bg-light" id="navbarMain">
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
 
       <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-xs-12 mt-3">
         <div class="media mt-3">
-          <img src="{{image_file}}" class="rounded-circle img-fluid Img125 img-responsive">
+          <img src="{{image_file}}" class="rounded-circle img-fluid c-size-125 img-responsive">
           <div class="media-body ml-4">
             <h3>{{ current_user.username }}</h3>
             <p class="text-secondary">{{ current_user.email }}</p>

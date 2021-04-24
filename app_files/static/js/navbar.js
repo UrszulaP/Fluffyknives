@@ -1,9 +1,9 @@
 // Change navbar background color on scroll
 var setNavbarColor = function() {
   if ($("#navbarMain").offset().top > 50) {
-    $("#navbarMain").addClass("bg-dark");
+    $("#navbarMain").addClass("c-bg-dark");
   } else {
-    $("#navbarMain").removeClass("bg-dark");
+    $("#navbarMain").removeClass("c-bg-dark");
   }
 };
 setNavbarColor();

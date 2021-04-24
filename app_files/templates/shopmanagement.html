@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block navbarposition %}
-<nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
+<nav class="navbar navbar-expand-md navbar-dark c-bg-light" id="navbarMain">
 {% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
         {% for i in items_list %}
 					<tr>
 						<td class="align-middle">{{ i.id }}</td>
-						<td class="align-middle"><img class="img-fluid Img125 img-responsive"
+						<td class="align-middle"><img class="img-fluid c-size-125 img-responsive"
 																					src="{{url_for('static', filename='images/shop/'+ i.item_image)}}"
 																					alt="Item image"></td>
 						<td class="align-middle text-nowrap">{{ i.item_name }}</td>
@@ -87,8 +87,8 @@
 
           <!-- CKEditor (text editor) implementation - id="editor" -->
           {{ form.item_points_description.label(class="form-control-label") }}
-          <!--taken outside the div with "Blacktext" class-->
-          <div class="form-group Blacktext">
+          <!--taken outside the div with "c-text-black" class-->
+          <div class="form-group c-text-black">
             {% if form.item_points_description.errors %}
 							{{ form.item_points_description(class="form-control is-invalid", id="editor") }}
 							<div class="invalid-feedback">

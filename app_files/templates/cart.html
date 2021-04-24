@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block navbarposition %}
-<nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
+<nav class="navbar navbar-expand-md navbar-dark c-bg-light" id="navbarMain">
 {% endblock %}
 
 {% block content %}
@@ -39,7 +39,7 @@
 					<!-- i[0] - join Order, i[1] - join Item -->
 					<tr class="text-nowrap">
 						<td class="align-middle">{{ i[0].id }}</td>
-						<td><img class="img-fluid Img125 img-responsive"
+						<td><img class="img-fluid c-size-125 img-responsive"
 										 src="{{url_for('static', filename='images/shop/'+ i[1].item_image)}}"
 										 alt="Item image"></td>
 						<td class="align-middle">{{ i[0].item_id }}</td>

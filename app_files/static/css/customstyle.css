@@ -8,7 +8,7 @@ body {
 
 /*------------------ CAROUSEL TEXT STYLES -------------------*/
 
-.Toptext {
+.c-toptext {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -20,38 +20,38 @@ body {
 	z-index: 12;
 }
 
-.Toptext .Logo {
+.c-toptext .c-logo {
 	font-family: 'Dancing Script', cursive;
 	font-size: 40px;
 	white-space: nowrap;
 }
 
-.Toptext p {
+.c-toptext p {
 	font-size: 12px;
 	font-style: italic;
 }
 
-.Toptext a {
+.c-toptext a {
 	font-size: 24px;
 	font-style: italic;
 }
 
-.Toptext .btn:hover {
+.c-toptext .btn:hover {
 	background-color: rgba(255, 255, 255, 0.7);
 }
 
 /*SM MD*/
 
 @media (min-width: 576px) {
-	.Toptext .Logo {
+	.c-toptext .c-logo {
 		font-size: 80px;
 	}
 
-	.Toptext p {
+	.c-toptext p {
 		font-size: 16px;
 	}
 
-	.Toptext a {
+	.c-toptext a {
 		font-size: 35px;
 	}
 }
@@ -59,20 +59,20 @@ body {
 /*LG XL*/
 
 @media (min-width: 992px) {
-	.Toptext .Logo {
+	.c-toptext .c-logo {
 		padding-bottom: 30px;
 
 		font-size: 100px;
 	}
 
-	.Toptext p {
+	.c-toptext p {
 		font-size: 18px;
 	}
 }
 
 /*--------------- TRANSPARENT BACKGROUND STYLE --------------*/
 
-	.Bggrey {
+	.c-bg-light {
 		background-color: rgba(31, 29, 29, 0.3);
 	}
 
@@ -93,7 +93,7 @@ body {
 
 /*---------------------- NAVBAR STYLES ----------------------*/
 
-.bg-dark {
+.c-bg-dark {
 	background-color: rgba(0, 0, 0, 0.8);
 }
 
@@ -115,7 +115,7 @@ body {
 
 /*----------------------- TEXT STYLES -----------------------*/
 
-.Sekcja {
+.c-header {
 	padding-top: 100px;
 
 	font-family: 'Markazi Text', serif;
@@ -130,13 +130,13 @@ footer {
 
 /*---------------------- IMAGES STYLES ----------------------*/
 
-.Img125 {
+.c-size-125 {
 	max-height: 125px; 
 	max-width: 125px;
 }
 
 /*--------------- TEXT EDITOR BLACK TEXT STYLE --------------*/
 
-.Blacktext {
+.c-text-black {
 	color: black;
 }
