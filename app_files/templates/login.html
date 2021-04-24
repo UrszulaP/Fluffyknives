@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
 
-
 {% block navbarposition %}
 <nav class="navbar navbar-expand-md navbar-dark Bggrey" id="navbarMain">
 {% endblock %}
-
 
 {% block content %}
 
@@ -13,8 +11,7 @@
 <div class="container">
 	<div class="row justify-content-md-center">
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-8 col-xs-12 mt-5">
-			<!-- action = "", because "/login" deletes 'next' argue from the querystring -->
-			<form action = "" method = "POST">
+			<form action = "" method = "POST">  <!-- action = "", because "/login" removes 'next' arg from the querystring -->
 				{{ form.hidden_tag() }}
 
 				<div class="form-group">
@@ -53,11 +50,9 @@
 				<div class="form-group">
 					{{ form.submit(class="btn btn-outline-light btn-block mt-4") }}
 				</div>
-
 			</form>
 		</div>
 	</div>
 </div>
 
 {% endblock content %}
-

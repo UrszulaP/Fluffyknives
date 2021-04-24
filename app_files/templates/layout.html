@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Markazi+Text" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Markazi+Text" rel="stylesheet">
 
-	<!-- My CSS -->
-	<link href="{{ url_for('static', filename='css/customstyle.css') }}" rel="stylesheet" type="text/css">
+  <!-- My CSS -->
+  <link href="{{ url_for('static', filename='css/customstyle.css') }}" rel="stylesheet" type="text/css">
 
-	<title>FluffyKnives</title>
-	<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <title>FluffyKnives</title>
+  <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
 </head>
 
 <body>
@@ -26,70 +27,71 @@
 <!-- Different navbar position for different pages -->
 {% block navbarposition %}{% endblock %}
 
-	<div class="container">
-		<a class="navbar-brand" href="/#carouselMain">
-			<img src="{{ url_for('static', filename='images/tigerfootprint.png') }}" width="70" height="70" alt="logo">
-		</a>
+  <div class="container">
+    <a class="navbar-brand" href="/#carouselMain">
+      <img src="{{ url_for('static', filename='images/tigerfootprint.png') }}" width="70" height="70" alt="logo">
+    </a>
 
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-laber="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" href="/#shop">Sklep</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-nowrap" href="/#aboutus">O nas</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/#contact">Kontakt</a>
-				</li>
-			</ul>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/#shop">Sklep</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-nowrap" href="/#aboutus">O nas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#contact">Kontakt</a>
+        </li>
+      </ul>
 
-			<!-- Different navbar content for admin, logged user and unlogged user -->
-			{% if current_user.is_admin %}
-				<ul class="navbar-nav ml-auto">
-					<span class="navbar-text mr-3">KONTO ADMINISTRATORA</span>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('shopmanagement') }}">Zarządzaj sklepem</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('orders') }}">Zamówienia</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
-					</li>
-				</ul>
+      <!-- Different navbar content for admin, logged user and unlogged user -->
+      {% if current_user.is_admin %}
+      <ul class="navbar-nav ml-auto">
+        <span class="navbar-text mr-3">KONTO ADMINISTRATORA</span>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('shopmanagement') }}">Zarządzaj sklepem</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('orders') }}">Zamówienia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
+        </li>
+      </ul>
 
-			{% elif current_user.is_authenticated %}
-				<ul class="navbar-nav ml-auto">
-					<span class="navbar-text mr-3">Witaj {{ current_user.username }}! :)</span>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('account') }}">Moje konto</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('cart') }}">Zamówienia</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
-					</li>
-				</ul>
+      {% elif current_user.is_authenticated %}
+      <ul class="navbar-nav ml-auto">
+        <span class="navbar-text mr-3">Witaj {{ current_user.username }}! :)</span>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('account') }}">Moje konto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('cart') }}">Zamówienia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
+        </li>
+      </ul>
 
-			{% else %}
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('register') }}">Załóż konto</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('login') }}">Zaloguj</a>
-					</li>
-				</ul>
-			{% endif %}
+      {% else %}
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('register') }}">Załóż konto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Zaloguj</a>
+        </li>
+      </ul>
+      {% endif %}
 
-		</div>
-	</div>
+    </div>
+  </div>
 </nav>
 
 <!-- ------------------------------ CONTENT ------------------------------ -->
@@ -98,16 +100,18 @@
 
 <!-- ------------------------------ SCRIPTS ------------------------------ -->
 
-		<!-- jQuery 3.1.0 instead of 3.3.1 to make smoothscrolling.js working -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-		<!-- Bootstrap scripts: Popper.js, Bootstrap JS -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
-		<!-- Navbar animation JS - from startbootstrap.com -->
-		<script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
-		<!-- Smooth scrolling JS - from https://css-tricks.com/ -->
-		<script src="{{ url_for('static', filename='js/smoothscrolling.js') }}"></script>
+<!-- jQuery 3.1.0 instead of 3.3.1 required for smoothScrolling.js to work correctly -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!-- Bootstrap scripts: Popper.js, Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+<!-- Other scripts -->
+<script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/smoothScrolling.js') }}"></script>
 
 </body>
 </html>

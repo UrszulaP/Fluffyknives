@@ -6,53 +6,51 @@
 
 {% block content %}
 
-<div class="container">
+  <div class="container">
 
 	<!-- ------------------------------ USERS ORDERS INFO ------------------------------ -->
 
 	<h4 class="text-center mt-3 mb-5">Twoje zamówienia</h4>
 
-	<p class="text-center mb-5">
-		Zamówienia zostaną zrealizowane w terminie do 7 dni od momentu otrzymania wpłaty.<br/>
-		Wpłaty należy dokonywać na konto:<br/><br/>
-		Fluffy Knives Sp. z o.o.<br/>
-		43 3380 1745 0000 0850 2346 7861<br/>
-		W tytule należy umieścić numer ID zamówienia.<br/><br/>
-		Pamiętaj o dodaniu adresu do wysyłki w zakładce "Moje konto".
-	</p>
+    <p class="text-center mb-5">
+      Zamówienia zostaną zrealizowane w terminie do 7 dni od momentu otrzymania wpłaty.<br/>
+      Wpłaty należy dokonywać na konto:<br/><br/>
+      Fluffy Knives Sp. z o.o.<br/>
+      43 3380 1745 0000 0850 2346 7861<br/>
+      W tytule należy umieścić numer ID zamówienia.<br/><br/>
+      Pamiętaj o dodaniu adresu do wysyłki w zakładce "Moje konto".
+    </p>
 
-	<!-- ------------------------------ USERS ORDERS TABLE ------------------------------ -->
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">ID zamówienia</th>
+          <th scope="col"></th>
+          <th scope="col">ID przedmiotu</th>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Cena</th>
+          <th scope="col">Status zamówienia</th>
+        </tr>
+        </thead>
 
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">ID zamówienia</th>
-					<th scope="col"></th>
-					<th scope="col">ID przedmiotu</th>
-					<th scope="col">Nazwa</th>
-					<th scope="col">Cena</th>
-					<th scope="col">Status zamówienia</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				{% for i in user_orders_list %}
-				<!-- i[0] - join Order, i[1] - join Item -->
-				<tr class="text-nowrap">
-					<td class="align-middle">{{ i[0].id }}</td>
-					<td><img class="img-fluid Img125 img-responsive" 
-					src="{{url_for('static', filename='images/shop/'+ i[1].item_image)}}" 
-					alt="Item image"></td>
-					<td class="align-middle">{{ i[0].item_id }}</td>
-					<td class="align-middle">{{ i[1].item_name }}</td>
-					<td class="align-middle">{{ i[1].item_price }}</td>
-					<td class="align-middle">{{ i[0].status }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-</div>
+        <tbody>
+        {% for i in user_orders_list %}
+					<!-- i[0] - join Order, i[1] - join Item -->
+					<tr class="text-nowrap">
+						<td class="align-middle">{{ i[0].id }}</td>
+						<td><img class="img-fluid Img125 img-responsive"
+										 src="{{url_for('static', filename='images/shop/'+ i[1].item_image)}}"
+										 alt="Item image"></td>
+						<td class="align-middle">{{ i[0].item_id }}</td>
+						<td class="align-middle">{{ i[1].item_name }}</td>
+						<td class="align-middle">{{ i[1].item_price }}</td>
+						<td class="align-middle">{{ i[0].status }}</td>
+					</tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 {% endblock content %}

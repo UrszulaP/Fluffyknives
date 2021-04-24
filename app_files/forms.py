@@ -77,13 +77,13 @@ class UpdateAccountForm(FlaskForm):
         validators=[
             Length(
                 max=200,
-                message="Adres powinien zawierać od %(min)d do %(max)d znaków")])
+                message="Adres powinien zawierać do %(max)d znaków")])
 
     phone = StringField(
         'Numer telefonu',
         validators=[
             Length(
-                max=20,
+                min=9, max=15,
                 message="Numer powinien zawierać od %(min)d do %(max)d znaków")])
 
     submit = SubmitField('Zaktualizuj')
@@ -98,8 +98,7 @@ class UpdateAccountForm(FlaskForm):
         if email.data != current_user.email:
             email = User.query.filter_by(email=email.data).first()
             if email:
-                raise ValidationError("Konto z podanym adresem e-mail już \
-                                      istnieje")
+                raise ValidationError("Konto z podanym adresem e-mail już istnieje")
 
 
 class OrderStatusForm(FlaskForm):
