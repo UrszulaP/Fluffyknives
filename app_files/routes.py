@@ -104,8 +104,8 @@ def cart():
         db.session.add(order)
         db.session.commit()
     user_orders = (db.session.query(Order, Item)
-                        .filter(Order.user_id == current_user.id)
-                        .join(Item, Order.item_id == Item.id))
+                   .filter(Order.user_id == current_user.id)
+                   .join(Item, Order.item_id == Item.id))
     return render_template('cart.html', user_orders=user_orders)
 
 
@@ -113,37 +113,39 @@ def cart():
 @login_required
 def shopmanagement():
     if current_user.is_admin:
-        # try - because there are 2 forms in one template
-        try:
-            # deletes item from the database by form from itmes table
-            deleted_item_id = int(request.form['deleted_item_id'])
-            deleted_item = Item.query.filter_by(id=deleted_item_id).first()
-            picture_path = os.path.join(
-                app.root_path, 'static/images/shop',
-                deleted_item.image)
-            os.remove(picture_path)
-            db.session.delete(deleted_item)
+        form = NewItemForm()
+        if form.validate_on_submit():
+            new_item_image = save_item_picture(form.image.data)
+            item = Item(
+                name=form.name.data,
+                short_description=form.short_description.data,
+                detailed_description=form.detailed_description.data,
+                image=new_item_image,
+                price=form.price.data)
+            db.session.add(item)
             db.session.commit()
             return redirect(url_for('shopmanagement'))
-        except:
-            # adds a new item
-            form = NewItemForm()
-            if form.validate_on_submit():
-                new_item_image = save_item_picture(form.image.data)
-                item = Item(
-                    name=form.name.data,
-                    short_description=form.short_description.data,
-                    detailed_description=form.detailed_description.data,
-                    image=new_item_image,
-                    price=form.price.data)
-                db.session.add(item)
-                db.session.commit()
-                return redirect(url_for('shopmanagement'))
         items = Item.query.all()
         return render_template(
             'shopmanagement.html',
             items=items,
             form=form)
+    else:
+        return redirect(url_for('root'))
+
+
+@app.route('/items/delete/<item_id>', methods=['POST'])  # impossible to send DELETE request from HTML template
+@login_required
+def delete_item(item_id):
+    if current_user.is_admin:
+        deleted_item = Item.query.filter_by(id=item_id).first()
+        picture_path = os.path.join(
+            app.root_path, 'static/images/shop',
+            deleted_item.image)
+        os.remove(picture_path)
+        db.session.delete(deleted_item)
+        db.session.commit()
+        return redirect(url_for('shopmanagement'))
     else:
         return redirect(url_for('root'))
 
