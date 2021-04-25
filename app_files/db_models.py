@@ -27,14 +27,14 @@ class Item(db.Model):
     __tablename__ = 'Item'
 
     id = db.Column(db.Integer, primary_key=True)
-    item_name = db.Column(db.String(30), unique=True, nullable=False)
-    item_main_description = db.Column(db.String(30))
-    item_points_description = db.Column(db.String(200))
-    item_image = db.Column(db.String(30), nullable=False)
-    item_price = db.Column(db.Float, nullable=False)
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    main_description = db.Column(db.String(30))
+    points_description = db.Column(db.String(200))
+    image = db.Column(db.String(30), nullable=False)
+    price = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return f"Item('{self.item_name}')"
+        return f"Item('{self.name}')"
 
 
 class Order(db.Model):

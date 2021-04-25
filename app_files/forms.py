@@ -113,7 +113,7 @@ class OrderStatusForm(FlaskForm):
 
 
 class NewItemForm(FlaskForm):
-    item_name = StringField(
+    name = StringField(
         'Nazwa',
         validators=[
             DataRequired("Pole wymagane"),
@@ -121,21 +121,21 @@ class NewItemForm(FlaskForm):
                 min=2, max=30,
                 message="Nazwa powinna zawierać od %(min)d do %(max)d znaków")])
 
-    item_main_description = TextAreaField(
+    main_description = TextAreaField(
         'Opis główny',
         validators=[
             Length(
                 max=200,
                 message="Opis powinien zawierać do %(max)d znaków")])
 
-    item_points_description = TextAreaField(
+    points_description = TextAreaField(
         'Opis dodatkowy',
         validators=[
             Length(
                 max=300,
                 message="Opis powinien zawierać do %(max)d znaków")])
 
-    item_image = FileField(
+    image = FileField(
         'Obraz',
         validators=[
             DataRequired("Pole wymagane"),
@@ -143,14 +143,14 @@ class NewItemForm(FlaskForm):
                 ['jpg', 'png'],
                 "Dozwolony format pliku to .jpg lub .png")])
 
-    item_price = FloatField(
+    price = FloatField(
         'Cena',
         validators=[
             DataRequired("Pole wymagane. Dozwolone formaty ceny: 100 / 100.00")])
 
     submit = SubmitField('Dodaj')
 
-    def validate_item_name(self, item_name):
-        item = Item.query.filter_by(item_name=item_name.data).first()
+    def validate_name(self, name):
+        item = Item.query.filter_by(name=name.data).first()
         if item:
             raise ValidationError("Przedmiot o podanej nazwie już istnieje")

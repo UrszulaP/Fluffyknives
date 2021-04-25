@@ -159,7 +159,7 @@ def shopmanagement():
             deleted_item = Item.query.filter_by(id=deleted_item_id).first()
             picture_path = os.path.join(
                 app.root_path, 'static/images/shop',
-                deleted_item.item_image)
+                deleted_item.image)
             os.remove(picture_path)
             db.session.delete(deleted_item)
             db.session.commit()
@@ -168,13 +168,13 @@ def shopmanagement():
             # adds a new item
             form = NewItemForm()
             if form.validate_on_submit():
-                new_item_image = save_item_picture(form.item_image.data)
+                new_item_image = save_item_picture(form.image.data)
                 item = Item(
-                    item_name=form.item_name.data,
-                    item_main_description=form.item_main_description.data,
-                    item_points_description=form.item_points_description.data,
-                    item_image=new_item_image,
-                    item_price=form.item_price.data)
+                    name=form.name.data,
+                    main_description=form.main_description.data,
+                    points_description=form.points_description.data,
+                    image=new_item_image,
+                    price=form.price.data)
                 db.session.add(item)
                 db.session.commit()
                 return redirect(url_for('shopmanagement'))
