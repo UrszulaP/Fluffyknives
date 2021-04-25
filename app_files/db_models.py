@@ -28,8 +28,8 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
-    main_description = db.Column(db.String(30))
-    points_description = db.Column(db.String(200))
+    short_description = db.Column(db.String(30))
+    detailed_description = db.Column(db.String(200))
     image = db.Column(db.String(30), nullable=False)
     price = db.Column(db.Float, nullable=False)
 

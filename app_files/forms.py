@@ -121,14 +121,14 @@ class NewItemForm(FlaskForm):
                 min=2, max=30,
                 message="Nazwa powinna zawierać od %(min)d do %(max)d znaków")])
 
-    main_description = TextAreaField(
+    short_description = TextAreaField(
         'Opis główny',
         validators=[
             Length(
                 max=200,
                 message="Opis powinien zawierać do %(max)d znaków")])
 
-    points_description = TextAreaField(
+    detailed_description = TextAreaField(
         'Opis dodatkowy',
         validators=[
             Length(

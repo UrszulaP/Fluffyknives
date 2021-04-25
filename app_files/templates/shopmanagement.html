@@ -27,19 +27,19 @@
         </thead>
 
         <tbody>
-        {% for i in items_list %}
+        {% for item in items %}
 					<tr>
-						<td class="align-middle">{{ i.id }}</td>
+						<td class="align-middle">{{ item.id }}</td>
 						<td class="align-middle"><img class="img-fluid c-size-125 img-responsive"
-																					src="{{url_for('static', filename='images/shop/'+ i.image)}}"
+																					src="{{url_for('static', filename='images/shop/'+ item.image)}}"
 																					alt="Item image"></td>
-						<td class="align-middle text-nowrap">{{ i.name }}</td>
-						<td class="align-middle">{{ i.main_description }}</td>
-						<td class="align-middle text-nowrap">{{ i.points_description | safe }}</td>
-						<td class="align-middle">{{ i.price }}</td>
+						<td class="align-middle text-nowrap">{{ item.name }}</td>
+						<td class="align-middle">{{ item.short_description }}</td>
+						<td class="align-middle text-nowrap">{{ item.detailed_description | safe }}</td>
+						<td class="align-middle">{{ item.price }}</td>
 						<td class="align-middle">
 							<form action="/shopmanagement" method="POST">
-								<button class="btn btn-outline-light" name="deleted_item_id" value="{{ i.id }}">Usuń</button>
+								<button class="btn btn-outline-light" name="deleted_item_id" value="{{ item.id }}">Usuń</button>
 							</form>
 						</td>
 					</tr>
@@ -72,32 +72,32 @@
           </div>
 
           <div class="form-group">
-            {{ form.main_description.label(class="form-control-label") }}
-            {% if form.main_description.errors %}
-							{{ form.main_description(class="form-control is-invalid") }}
+            {{ form.short_description.label(class="form-control-label") }}
+            {% if form.short_description.errors %}
+							{{ form.short_description(class="form-control is-invalid") }}
 							<div class="invalid-feedback">
-								{% for error in form.main_description.errors %}
+								{% for error in form.short_description.errors %}
 									<span>{{ error }}</span>
 								{% endfor %}
 							</div>
             {% else %}
-            	{{ form.main_description(class="form-control", rows='3') }}
+            	{{ form.short_description(class="form-control", rows='3') }}
             {% endif %}
           </div>
 
           <!-- CKEditor (text editor) implementation - id="editor" -->
-          {{ form.points_description.label(class="form-control-label") }}
+          {{ form.detailed_description.label(class="form-control-label") }}
           <!--taken outside the div with "c-text-black" class-->
           <div class="form-group c-text-black">
-            {% if form.points_description.errors %}
-							{{ form.points_description(class="form-control is-invalid", id="editor") }}
+            {% if form.detailed_description.errors %}
+							{{ form.detailed_description(class="form-control is-invalid", id="editor") }}
 							<div class="invalid-feedback">
-								{% for error in form.points_description.errors %}
+								{% for error in form.detailed_description.errors %}
 									<span>{{ error }}</span>
 								{% endfor %}
 							</div>
             {% else %}
-            	{{ form.points_description(class="form-control", id="editor") }}
+            	{{ form.detailed_description(class="form-control", id="editor") }}
             {% endif %}
           </div>
 

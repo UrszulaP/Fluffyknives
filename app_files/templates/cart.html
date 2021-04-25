@@ -35,17 +35,17 @@
         </thead>
 
         <tbody>
-        {% for i in user_orders_list %}
-					<!-- i[0] - join Order, i[1] - join Item -->
+        {% for order in user_orders %}
+					<!-- order[0] - join Order, order[1] - join Item -->
 					<tr class="text-nowrap">
-						<td class="align-middle">{{ i[0].id }}</td>
+						<td class="align-middle">{{ order[0].id }}</td>
 						<td><img class="img-fluid c-size-125 img-responsive"
-										 src="{{url_for('static', filename='images/shop/'+ i[1].image)}}"
+										 src="{{url_for('static', filename='images/shop/'+ order[1].image)}}"
 										 alt="Item image"></td>
-						<td class="align-middle">{{ i[0].item_id }}</td>
-						<td class="align-middle">{{ i[1].name }}</td>
-						<td class="align-middle">{{ i[1].price }}</td>
-						<td class="align-middle">{{ i[0].status }}</td>
+						<td class="align-middle">{{ order[0].item_id }}</td>
+						<td class="align-middle">{{ order[1].name }}</td>
+						<td class="align-middle">{{ order[1].price }}</td>
+						<td class="align-middle">{{ order[0].status }}</td>
 					</tr>
         {% endfor %}
         </tbody>

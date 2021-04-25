@@ -28,21 +28,21 @@
 				</thead>
 
 				<tbody>
-					{% for i in orders_list %}
-					<!-- i[0] - join Order, i[1] - join Item, i[2] - join User -->
+					{% for order in orders %}
+					<!-- order[0] - join Order, order[1] - join Item, order[2] - join User -->
 					<tr class="text-nowrap">
-						<td class="align-middle">{{ i[0].id }}</td>
-						<td class="align-middle">{{ i[0].item_id }}</td>
-						<td class="align-middle">{{ i[1].name }}</td>
-						<td class="align-middle">{{ i[1].price }}</td>
-						<td class="align-middle">{{ i[2].id }}</td>
-						<td class="align-middle">{{ i[2].email }}</td>
-						<td class="align-middle">{{ i[2].adress }}</td>
-						<td class="align-middle">{{ i[2].phone }}</td>
+						<td class="align-middle">{{ order[0].id }}</td>
+						<td class="align-middle">{{ order[0].item_id }}</td>
+						<td class="align-middle">{{ order[1].name }}</td>
+						<td class="align-middle">{{ order[1].price }}</td>
+						<td class="align-middle">{{ order[2].id }}</td>
+						<td class="align-middle">{{ order[2].email }}</td>
+						<td class="align-middle">{{ order[2].adress }}</td>
+						<td class="align-middle">{{ order[2].phone }}</td>
 
 						<td class="align-middle">
 							<div class="mb-2">
-								{{ i[0].status }}
+								{{ order[0].status }}
 							</div>
 							<div class="border-top">
 
@@ -58,7 +58,7 @@
 
 									<!-- Hidden field with inserted order_id (value taken from the for loop), to find out which order it refers -->
 									<div class="form-group d-none">
-										{{ form.order_id(class="form-control", value=i[0].id) }}
+										{{ form.order_id(class="form-control", value=order[0].id) }}
 									</div>
 
 									<div class="form-group text-center">

@@ -63,20 +63,20 @@
 
       <!-- Items cards -->
       <div class="row">
-        {% for i in items_list %}
+        {% for item in items %}
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
           <div class="card border-dark text-dark mb-3 mt-3">
             <img class="card-img-top img-fluid"
-                 src="{{url_for('static', filename='images/shop/'+ i.image)}}"
+                 src="{{url_for('static', filename='images/shop/'+ item.image)}}"
                  alt="Card image cap">
             <div class="card-body">
-              <h5 class="card-title text-center">{{ i.name }}</h5>
-              <p class="card-text text-center">{{ i.main_description }}</p>
-              {{ i.points_description | safe}}
-              <p class="card-text text-center">Cena: {{ "%.2f" % i.price }} zł</p>
+              <h5 class="card-title text-center">{{ item.name }}</h5>
+              <p class="card-text text-center">{{ item.short_description }}</p>
+              {{ item.detailed_description | safe}}
+              <p class="card-text text-center">Cena: {{ "%.2f" % item.price }} zł</p>
               <form action="/cart" method="POST">
                 <div class="text-center">
-                  <button class="btn btn-outline-dark" name="ordered_item_id" value="{{ i.id }}">Zamów</button>
+                  <button class="btn btn-outline-dark" name="ordered_item_id" value="{{ item.id }}">Zamów</button>
                 </div>
               </form>
             </div>

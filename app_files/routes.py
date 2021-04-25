@@ -9,49 +9,10 @@ import os
 from PIL import Image
 
 
-def save_user_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    file_name, file_extension = os.path.splitext(form_picture.filename)
-    picture_filename = random_hex + file_extension
-    picture_path = os.path.join(
-        app.root_path,
-        'static/images/profile_pictures',
-        picture_filename)
-    output_size = (125, 125)
-    resized_picture = Image.open(form_picture)
-    resized_picture.thumbnail(output_size)
-    resized_picture.save(picture_path)
-    return picture_filename
-
-
-def delete_old_picture(user):
-    if user.image_file != 'defaultpp.jpg':
-        old_picture_path = os.path.join(
-            app.root_path,
-            'static/images/profile_pictures',
-            user.image_file)
-        os.remove(old_picture_path)
-
-
-def save_item_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    file_name, file_extension = os.path.splitext(form_picture.filename)
-    picture_filename = random_hex + file_extension
-    picture_path = os.path.join(
-        app.root_path,
-        'static/images/shop',
-        picture_filename)
-    output_size = (700, 700)
-    resized_picture = Image.open(form_picture)
-    resized_picture.thumbnail(output_size)
-    resized_picture.save(picture_path)
-    return picture_filename
-
-
 @app.route('/')
 def root():
-    items_list = Item.query.all()
-    return render_template('main.html', items_list=items_list)
+    items = Item.query.all()
+    return render_template('main.html', items=items)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -142,10 +103,10 @@ def cart():
         order = Order(item_id=ordered_item_id, user_id=current_user.id)
         db.session.add(order)
         db.session.commit()
-    user_orders_list = (db.session.query(Order, Item)
+    user_orders = (db.session.query(Order, Item)
                         .filter(Order.user_id == current_user.id)
                         .join(Item, Order.item_id == Item.id))
-    return render_template('cart.html', user_orders_list=user_orders_list)
+    return render_template('cart.html', user_orders=user_orders)
 
 
 @app.route('/shopmanagement', methods=['GET', 'POST'])
@@ -171,17 +132,17 @@ def shopmanagement():
                 new_item_image = save_item_picture(form.image.data)
                 item = Item(
                     name=form.name.data,
-                    main_description=form.main_description.data,
-                    points_description=form.points_description.data,
+                    short_description=form.short_description.data,
+                    detailed_description=form.detailed_description.data,
                     image=new_item_image,
                     price=form.price.data)
                 db.session.add(item)
                 db.session.commit()
                 return redirect(url_for('shopmanagement'))
-        items_list = Item.query.all()
+        items = Item.query.all()
         return render_template(
             'shopmanagement.html',
-            items_list=items_list,
+            items=items,
             form=form)
     else:
         return redirect(url_for('root'))
@@ -189,7 +150,7 @@ def shopmanagement():
 
 @app.route('/orders', methods=['GET', 'POST'])
 @login_required
-def orders():
+def orders_management():
     if current_user.is_admin:
         form = OrderStatusForm()
         if form.validate_on_submit():
@@ -198,12 +159,51 @@ def orders():
                 Order.id == order_id).first()
             order.status = form.status.data
             db.session.commit()
-        orders_list = (db.session.query(Order, Item, User)
-                       .join(Item, Order.item_id == Item.id)
-                       .join(User, Order.user_id == User.id).all())
+        orders = (db.session.query(Order, Item, User)
+                  .join(Item, Order.item_id == Item.id)
+                  .join(User, Order.user_id == User.id).all())
         return render_template(
             'orders.html',
-            orders_list=orders_list,
+            orders=orders,
             form=form)
     else:
         return redirect(url_for('root'))
+
+
+def save_user_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    file_name, file_extension = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_extension
+    picture_path = os.path.join(
+        app.root_path,
+        'static/images/profile_pictures',
+        picture_filename)
+    output_size = (125, 125)
+    resized_picture = Image.open(form_picture)
+    resized_picture.thumbnail(output_size)
+    resized_picture.save(picture_path)
+    return picture_filename
+
+
+def delete_old_picture(user):
+    if user.image_file != 'defaultpp.jpg':
+        old_picture_path = os.path.join(
+            app.root_path,
+            'static/images/profile_pictures',
+            user.image_file)
+        os.remove(old_picture_path)
+
+
+def save_item_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    file_name, file_extension = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_extension
+    picture_path = os.path.join(
+        app.root_path,
+        'static/images/shop',
+        picture_filename)
+    output_size = (700, 700)
+    resized_picture = Image.open(form_picture)
+    resized_picture.thumbnail(output_size)
+    resized_picture.save(picture_path)
+    return picture_filename
