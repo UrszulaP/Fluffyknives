@@ -138,20 +138,10 @@
     <!-- ------------------------------ CKEDITOR IMPORT ------------------------------ -->
 
     <div>
-      <!-- Import -->
+      <!-- CKEDitor import -->
       <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
-
-      <!-- Configuration -->
-      <script>
-				ClassicEditor
-					.create( document.querySelector( '#editor' ), {
-						removePlugins: [ 'Heading', 'BlockQuote' ],
-						toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList'],
-					} )
-					.catch( error => {
-						console.log( error );
-					} );
-      </script>
+      <!-- CKEDitor configuration -->
+      <script src="{{ url_for('static', filename='js/ckEditorConfig.js') }}"></script>
     </div>
   </div>
 

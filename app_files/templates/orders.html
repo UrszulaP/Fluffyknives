@@ -39,28 +39,23 @@
 						<td class="align-middle">{{ order[2].email }}</td>
 						<td class="align-middle">{{ order[2].adress }}</td>
 						<td class="align-middle">{{ order[2].phone }}</td>
-
 						<td class="align-middle">
 							<div class="mb-2">
 								{{ order[0].status }}
 							</div>
 							<div class="border-top">
-
 								<!-- Order status change form -->
 								<form action="/orders" method="POST">
 									{{ form.hidden_tag() }} <!-- for security -->
-
 									<!-- Radio buttons with options to choose -->
 									<div class="form-check">
 										{{ form.status.label(class="form-control-label") }}
 										{{ form.status(class="form-check-label")}}
 									</div>
-
 									<!-- Hidden field with inserted order_id (value taken from the for loop), to find out which order it refers -->
 									<div class="form-group d-none">
 										{{ form.order_id(class="form-control", value=order[0].id) }}
 									</div>
-
 									<div class="form-group text-center">
 										{{ form.submit(class="btn btn-outline-light btn-sm") }}
 									</div>

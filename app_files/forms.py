@@ -76,8 +76,8 @@ class UpdateAccountForm(FlaskForm):
         'Adres do wysyłki',
         validators=[
             Length(
-                max=200,
-                message="Adres powinien zawierać do %(max)d znaków")])
+                min=10, max=200,
+                message="Adres powinien zawierać od %(min)d do %(max)d znaków")])
 
     phone = StringField(
         'Numer telefonu',
